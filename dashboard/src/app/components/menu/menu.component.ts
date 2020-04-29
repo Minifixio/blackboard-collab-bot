@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  opened = false;
+  opened = true;
 
   constructor() { }
 

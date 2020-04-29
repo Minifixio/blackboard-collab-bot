@@ -1,0 +1,25 @@
+#main-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.start-bot-card {
+    text-align: center;
+    width: 70%;
+    margin-top: 20px;
+}
+
+.start-bot-card > mat-card-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.start-bot-card > mat-card-content > form {
+    width: 100%;
+}
+
+.mat-form-field {
+    width: 80%;
+}

@@ -1,0 +1,35 @@
+
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="opened = !opened">
+    <mat-icon>menu</mat-icon>
+    </button> BOT Blackboard Collab
+</mat-toolbar>
+
+<mat-sidenav-container  class="main-container" autosize>
+  <mat-sidenav class="main-sidenav" [opened]="opened" fixedInViewport="false" mode="side">
+              <mat-list role="list">
+
+                <mat-list-item role="listitem">
+                  <button routerLink="/main" class="sidenav-button" mat-button>
+                    Page de contrôle
+                  </button> 
+                </mat-list-item>
+
+                <mat-list-item role="listitem"> 
+                  <button routerLink="/soundboard" class="sidenav-button" mat-button>
+                    Soundboard
+                  </button> 
+                </mat-list-item>
+
+                <mat-list-item role="listitem">
+                  <button class="sidenav-button" mat-button>
+                    Services
+                  </button> 
+                </mat-list-item>
+
+              </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

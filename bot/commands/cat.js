@@ -11,8 +11,8 @@ async function call(content) {
 
     try {
         var res = await httpManager.get(catUrl)
-        await this.currentBot.webdriver.sendChat('Voici une image de chat ' + res.url)
+        await currentBot.webdriver.sendChat('Voici une image de chat ' + res[0].url)
     } catch(e) {
-        await this.currentBot.webdriver.sendChat('Je galère à trouver des chats la')
+        await currentBot.webdriver.sendChat('Je galère à trouver des chats la')
     }
 }

@@ -5,6 +5,7 @@ const MemeCmd = require('./commands/meme.js').MemeCmd
 const CatCmd = require('./commands/cat.js').CatCmd
 const MathCmd = require('./commands/math.js').MathCmd
 const SpeakCmd = require('./commands/speak.js').SpeakCmd
+const SoundCmd = require('./commands/sound.js').SoundCmd
 
 const currentBot = require('./bot.js').currentBot
 
@@ -15,11 +16,11 @@ var commands = [
     MemeCmd,
     CatCmd,
     MathCmd,
-    SpeakCmd
+    SpeakCmd,
+    SoundCmd
 ]
 
 module.exports.bindCommand = async function bindCommand(commandName, content) {
-    console.log('bind command', commandName, content)
 
     // Searching for the corresponding command
     let command = commands.find(el => el.name == commandName)

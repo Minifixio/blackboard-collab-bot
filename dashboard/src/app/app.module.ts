@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,18 +16,22 @@ import {MatListModule} from '@angular/material/list';
 import { SoundboardComponent } from './pages/soundboard/soundboard.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+import { CommandsListComponent } from './components/commands-list/commands-list.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     MainComponent,
-    SoundboardComponent
+    SoundboardComponent,
+    CommandsListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
     MatSidenavModule,
     MatButtonModule,
@@ -34,7 +39,8 @@ import {MatInputModule} from '@angular/material/input';
     MatToolbarModule,
     MatListModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

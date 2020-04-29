@@ -1,5 +1,3 @@
-const currentBot = require('./bot.js').currentBot
-
 const HelpCmd = require('./commands/help.js').HelpCmd
 const TraduceCmd = require('./commands/traduce.js').TraduceCmd
 const DrawCmd = require('./commands/draw.js').DrawCmd
@@ -7,6 +5,8 @@ const MemeCmd = require('./commands/meme.js').MemeCmd
 const CatCmd = require('./commands/cat.js').CatCmd
 const MathCmd = require('./commands/math.js').MathCmd
 const SpeakCmd = require('./commands/speak.js').SpeakCmd
+
+const currentBot = require('./bot.js').currentBot
 
 var commands = [
     HelpCmd,
@@ -59,3 +59,7 @@ function removeCommand() {
 }
 
 module.exports.commands = commands;
+
+if (currentBot.testing) {
+    this.registerCommands('*')
+}

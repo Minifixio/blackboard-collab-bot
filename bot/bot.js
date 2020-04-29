@@ -1,4 +1,5 @@
 var webdriver = require('./webdriver.js')
+var command_manager = require('./command_manager.js')
 const testing = true;
 
 class Bot {
@@ -39,4 +40,3 @@ class Bot {
 
 var currentBot = new Bot()
 module.exports.currentBot = currentBot
-

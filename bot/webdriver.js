@@ -260,7 +260,10 @@ function newChat(chat) {
 
     if (valid) {
         let command = message.substring(bot.currentBot.tag.length).trim().split(' ')[0]
-        let content = message.substring(bot.currentBot.tag.length).trim().split(' ')[1]
+        let content = {
+            message: message.substring(bot.currentBot.tag.length).trim().split(' ')[1],
+            username: username
+        }
 
         cmdManager.bindCommand(command, content)
     }

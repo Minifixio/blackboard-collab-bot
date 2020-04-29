@@ -8,7 +8,7 @@ module.exports.MathCmd = new Command('math', call, description, false)
 
 async function call(content) {
     try {
-        let result = mathjs.evaluate(content)
+        let result = mathjs.evaluate(content.message)
         await currentBot.webdriver.sendChat(String(result))
     } catch(e) {
         await currentBot.webdriver.sendChat('Veuillez rentrer une expression correcte')

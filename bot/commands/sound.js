@@ -1,12 +1,15 @@
-var play = require('play')
 const path = require('path');
 var player = require('play-sound')(opts = {})
-
 var currentBot = require('../bot.js').currentBot
+
+let description = 'joue un son'
+
 const Command = require('../models/Command.js').Command
 
+var SoundCmd = new Command('son', call, description, false)
+module.exports.SoundCmd = SoundCmd
+
 let soundsPath = '../files/sounds/'
-let description = 'joue un son'
 
 let sounds = [
     {name: 'bruh', path: `${soundsPath}bruh.mp3`},
@@ -18,12 +21,31 @@ let sounds = [
 
 module.exports.MemeCmd = new Command('son', call, description, false)
 
+// TODO : Turn on mic
 async function call(content) {
 
     let desiredSound = sounds.find(sound => sound.name == content.message)
 
-    if (desiredSound) {
-        console.log(desiredSound)
-        player.play(path.resolve(__dirname, desiredSound.path))
+    if (!desiredSound) {
+        await currentBot.webdriver.sendChat('Voici les sons disponibles :')
+
+        for (let sound of sounds) {
+            await currentBot.webdriver.sendChat('> ' + currentBot.tag + SoundCmd.name + ' ' + sound.name)
+        }
+
+        return false
     }
+
+    let page = currentBot.webdriver.page
+
+    var micClass = await page.evaluate(() => {
+        return document.querySelector("#mic-enable").className
+    })
+
+    if (!micClass.includes('active')) {
+        await page.click('#raise-hand')
+        await page.click('#mic-enable')
+    }
+
+    player.play(path.resolve(__dirname, desiredSound.path))
 }

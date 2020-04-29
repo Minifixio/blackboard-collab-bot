@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuComponent } from 'src/app/components/menu/menu.component';
+import { CommandsListComponent } from 'src/app/components/commands-list/commands-list.component';
 
 @Component({
   selector: 'app-main',
@@ -8,8 +8,8 @@ import { MenuComponent } from 'src/app/components/menu/menu.component';
 })
 export class MainComponent implements OnInit {
 
-  @ViewChild('menu', {static: true})
-  menu: MenuComponent;
+  @ViewChild('commands-list', {static: true})
+  menu: CommandsListComponent;
 
   constructor() { }
 

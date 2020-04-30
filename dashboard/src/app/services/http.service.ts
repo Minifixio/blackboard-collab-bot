@@ -18,4 +18,14 @@ export class HttpService {
   get(tag): Observable<any> {
     return this.http.get(this.mainUrl + tag);
   }
+
+  post(tag, postParams): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<any>(this.mainUrl + tag, JSON.stringify(postParams), httpOptions);
+  }
 }

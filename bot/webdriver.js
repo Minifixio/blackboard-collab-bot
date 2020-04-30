@@ -71,32 +71,20 @@ module.exports.WebBrowser = class WebBrowser {
             await this.init()
         }
 
-        try {
-            // This icon is only visible on the main page. If it is not present, then we are on the login page
-            await this.page.waitForSelector('#status-selector-toggle > bb-svg-icon', { timeout: 5000 })
-
+        // This icon is only visible on the main page. If it is not present, then we are on the login page
+        this.page.waitForSelector('#status-selector-toggle > bb-svg-icon', { timeout: 5000 }).then(async() => {
             // Reloading to make sure to remove any page.evalute() scripts already running on the page
             await this.page.reload()
             await this.page.waitFor(2000)
             await this.click('#side-panel-open')
-
-            try {
-                let mainChatButton = await this.page.waitForXPath('/html/body/div[1]/div[1]/main/div[3]/section/div/div/ul/li/ul/li/bb-channel-list-item/button', {timeout: 3000})
-                if (mainChatButton) {
-                    await mainChatButton.click()
-                }
-
-            } catch(e) {
-                this.listenForChat()
-                return
-            }
-
-        } catch (e) {
+            this.listenForChat()
+        })
+        .catch(async() => {
             await this.skipTestPage()
             await this.skipMicSetup()
-        }
+            this.listenForChat()
+        })
 
-        this.listenForChat()
     }
 
     /**
@@ -195,10 +183,9 @@ module.exports.WebBrowser = class WebBrowser {
         //#techcheck-video-ok-button => selector to set video as OK
         //await this.page.waitForXPath('//*[@id="dialog-description-audio"]/div[2]/button', {timeout: 10000000})
 
-        await this.page.waitForSelector('#dialog-description-audio > div.techcheck-audio-skip.ng-scope', {timeout: 10000000})
+        await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
         //await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
         //await this.click('#techcheck-video-ok-button')
-        await this.click('#techcheck-modal > button')
         await this.click('#techcheck-modal > button')
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
@@ -236,16 +223,17 @@ function newChat(chat) {
     let message = chat[0]
     let username = chat[1].trim()
     let valid = true
-    let botName = bot.currentBot.name
+    let currentBot = bot.getBotInfos()
+    let botName = currentBot.name
 
     // For tesing purpose only
-    if (bot.currentBot.testing) {
+    if (currentBot.testing) {
         botName = `${botName}@${botName}`
     }
 
     // check if message contains the botTag at the beginning
-    for (let i=0; i < bot.currentBot.tag.length; i++) {
-        if (message[i] == bot.currentBot.tag[i]) {
+    for (let i=0; i < currentBot.tag.length; i++) {
+        if (message[i] == currentBot.tag[i]) {
             continue
         } else {
             valid = false
@@ -259,9 +247,9 @@ function newChat(chat) {
     }
 
     if (valid) {
-        let command = message.substring(bot.currentBot.tag.length).trim().split(' ')[0]
+        let command = message.substring(currentBot.tag.length).trim().split(' ')[0]
         let content = {
-            message: message.substring(bot.currentBot.tag.length).trim().split(' ')[1],
+            message: message.substring(currentBot.tag.length).trim().split(' ')[1],
             username: username
         }
 

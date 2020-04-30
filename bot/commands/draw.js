@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path');
-var currentBot = require('../bot.js').currentBot
+var bot = require('../bot.js')
 const Command = require('../models/Command.js').Command
 let imgPath = '../models/drawings/'
 
@@ -20,6 +20,7 @@ var imgs = [
 
 async function call(content) {
     
+    let currentBot = bot.getBotInstance()
     let desiredImg = imgs.find(img => img.name == content.message)
 
     if (!desiredImg) {
@@ -33,7 +34,7 @@ async function call(content) {
         if (drawer == null) {
             var imagePoints = JSON.parse(fs.readFileSync(path.resolve(__dirname, desiredImg.path)))
             drawer = new Drawer()
-            await drawer.draw(imagePoints)
+            await drawer.draw(imagePoints, currentBot)
             drawer = null
         } else {
             await currentBot.webdriver.sendChat('Attends un peu que je finisse mon dessin !')
@@ -45,7 +46,7 @@ async function call(content) {
 class Drawer {
 
     // TODO : Check if the drawing is available
-    async draw(points) {
+    async draw(points, currentBot) {
 
         var page = currentBot.webdriver.page
     

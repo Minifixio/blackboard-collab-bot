@@ -1,6 +1,6 @@
 const say = require('say')
 
-var currentBot = require('../bot.js').currentBot
+var bot = require('../bot.js')
 const Command = require('../models/Command.js').Command
 
 let description = 'fait parler le BOT'
@@ -10,6 +10,8 @@ module.exports.SpeakCmd = new Command('parle', call, description, false)
 // TODO : Turn on mic
 async function call(content) {
 
+    let currentBot = bot.getBotInstance()
+    
     var micClass = await page.evaluate(() => {
         return document.querySelector("#mic-enable").className
     })

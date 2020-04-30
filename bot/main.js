@@ -34,8 +34,7 @@ app.post('/api/start', (req, res) => {
 
 // Get current bot
 app.get('/api/bot', (req, res) => {
-    console.log(bot.getBot())
-    res.json(bot.getBot())
+    res.json(bot.getBotInfos())
 })
 
 // Get the list of commands
@@ -48,7 +47,7 @@ app.get('/api/sounds', (req, res) => {
     res.json(soundCommand.sounds)
 })
 
-app.get('/api/play-sound', async(req, res) => {
+app.post('/api/play-sound', async(req, res) => {
     let soundPlayed = await soundCommand.SoundCmd.call({message: req.body.name})
 
     if (soundPlayed) {

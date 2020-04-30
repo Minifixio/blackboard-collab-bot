@@ -44,7 +44,7 @@ module.exports.registerCommands = function registerCommands(commandList) {
         })
     } else {
         commands.forEach(command => {
-            if (commandList.includes(command.name)) {
+            if (commandList.find(cmd => cmd.name == command.name).activated == true) {
                 command.activated = true
             }
         })  

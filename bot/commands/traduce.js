@@ -1,4 +1,4 @@
-var currentBot = require('../bot.js').currentBot
+var bot = require('../bot.js')
 const Command = require('../models/Command.js').Command
 
 let description = 'traduire un texte'

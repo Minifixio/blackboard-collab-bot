@@ -4,4 +4,5 @@ export interface Bot {
     name: string;
     url: string;
     commands: Command[];
+    connected: boolean;
 }

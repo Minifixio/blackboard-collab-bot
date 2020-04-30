@@ -1,6 +1,6 @@
 const path = require('path');
 var player = require('play-sound')(opts = {})
-var currentBot = require('../bot.js').currentBot
+var bot = require('../bot.js')
 
 let description = 'joue un son'
 let soundsPath = '../files/sounds/'
@@ -22,6 +22,8 @@ let sounds = [
 module.exports.sounds = sounds
 
 async function call(content) {
+
+    let currentBot = bot.getBotInstance()
 
     let desiredSound = sounds.find(sound => sound.name == content.message)
 

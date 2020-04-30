@@ -22,6 +22,8 @@ class Bot {
 
     async start(url) {
 
+        this.url = url
+
         if (testing) {
             this.webdriver = new webdriver.WebBrowser('http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G', 'BOTEST', this.tag, this)
 
@@ -63,18 +65,23 @@ module.exports.connectBot = function connectBot(url) {
     currentBot.start(url)
 }
 
-module.exports.getBot = function getBot() {
+module.exports.getBotInfos = function getBotInfos() {
 
     if (currentBot) {
         return {
             name: currentBot.name,
             tag: currentBot.tag,
             url: currentBot.url,
-            connected: currentBot.connected
+            connected: currentBot.connected,
+            testing: currentBot.testing
         }
     } else {
         return null
     }
+}
+
+module.exports.getBotInstance = function getBotInstance() {
+    return currentBot
 }
 
 module.exports.currentBot = currentBot

@@ -20,9 +20,12 @@ export class SoundboardComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.get('sounds').toPromise().then(sounds => {
       this.sounds = sounds;
-      let tests = this.sounds
       this.cols = Math.round(Math.sqrt(this.sounds.length));
     });
+  }
+
+  async playSound(name) {
+    await this.httpService.post('play-sound', {name}).toPromise();
   }
 
 }

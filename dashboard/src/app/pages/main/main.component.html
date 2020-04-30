@@ -40,7 +40,7 @@
           Status :
           <div *ngIf="!connected" class="statut-div">
             <mat-spinner diameter="20"></mat-spinner>
-            Connexion en cours
+            {{connectionMessage}}
             <mat-icon class="not-connected-icon">signal_wifi_off</mat-icon>
           </div>
           
@@ -65,6 +65,9 @@
      
     </mat-card>
 
-    <mat-spinner *ngIf="loading"></mat-spinner>
+    <div *ngIf="loading">
+      <mat-spinner></mat-spinner>
+      Connexion en cours
+    </div>
 
 </div>

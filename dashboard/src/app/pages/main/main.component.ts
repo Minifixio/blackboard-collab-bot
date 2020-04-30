@@ -22,9 +22,10 @@ export class MainComponent implements OnInit {
 
   loading = false;
   connected = false;
+  connectionMessage: string;
 
-  botUrlInput: string;
   botNameInput: string;
+  botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
 
   constructor(
     private auth: AuthService,
@@ -37,9 +38,9 @@ export class MainComponent implements OnInit {
     this.socketService.setup();
 
     this.httpService.get('bot').toPromise().then(bot => {
-      console.log(bot)
       if (bot) {
         this.currentBot = bot;
+        this.connected = this.currentBot.connected;
       }
     });
 
@@ -53,14 +54,15 @@ export class MainComponent implements OnInit {
 
   async startBot() {
 
-    if (!this.botName || this.botUrl.includes('bbcollab.com')) {
+    if (!this.botNameInput || !(this.botUrlInput.includes('bbcollab.com') || this.botUrlInput.includes('blackboard'))) {
       this.showToastError('Veuillez remplir les champs correctement avant!');
     } else {
 
       this.currentBot = {
-        name: this.botName,
-        url: this.botUrl,
-        commands: this.commands.selectedCommands()
+        name: this.botNameInput,
+        url: this.botUrlInput,
+        commands: this.commands.selectedCommands(),
+        connected: true
       };
 
       await this.httpService.post('start', this.currentBot).toPromise();
@@ -85,6 +87,7 @@ export class MainComponent implements OnInit {
       case 'connecting':
         this.loading = false;
         this.connected = false;
+        this.connectionMessage = 'Connexion en cours';
         break;
 
       case 'live':
@@ -105,11 +108,13 @@ export class MainComponent implements OnInit {
       case 'setup-mic':
         this.loading = false;
         this.connected = false;
+        this.connectionMessage = 'Le bot accède au micro';
         break;
 
       case 'setup-mic-done':
         this.loading = false;
         this.connected = false;
+        this.connectionMessage = 'Micro mis en place';
         break;
     }
   }

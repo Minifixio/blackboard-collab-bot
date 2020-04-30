@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,9 +10,12 @@ export class MenuComponent implements OnInit {
 
   opened = true;
 
-  constructor() { }
+  constructor(
+    private socketService: SocketService
+  ) { }
 
   ngOnInit(): void {
+
   }
 
 }

@@ -36,6 +36,10 @@
               </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="socketService.alive"></router-outlet>
+
+    <div *ngIf="!socketService.alive" id="error-socket-div">
+      <mat-title>ERREUR DE CONNEXION AU SERVEUR</mat-title>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -2,7 +2,7 @@
     <mat-grid-list id="sounds-grid-list" [cols]="cols" rowHeight="3:1">
         <mat-grid-tile *ngFor="let sound of sounds">
 
-            <button mat-raised-button color="primary" class="sound-card-button">
+            <button mat-raised-button color="primary" class="sound-card-button" (click)="playSound(sound.name)">
                 <span class="sound-card-spann">
                     {{sound.name}}
                 </span>

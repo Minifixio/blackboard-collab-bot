@@ -60,7 +60,3 @@ function removeCommand() {
 }
 
 module.exports.commands = commands;
-
-if (currentBot.testing) {
-    this.registerCommands('*')
-}

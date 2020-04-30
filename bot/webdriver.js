@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const cmdManager = require('./command_manager.js')
 const bot = require('./bot.js')
-var socketEmit = require('./main.js').socketEmit
+var sockets = require('./main.js')
 
 module.exports.WebBrowser = class WebBrowser {
 
@@ -11,6 +11,7 @@ module.exports.WebBrowser = class WebBrowser {
         this.botName = botName
         this.botTag = botTag
         this.bot = bot
+        this.socketEmit = sockets.socketEmit
     }
 
     async init() {
@@ -35,13 +36,13 @@ module.exports.WebBrowser = class WebBrowser {
      * @param {string} url 
      */
     async gotTo(url) {
-        socketEmit('connecting', this.url)
+        this.socketEmit('bot-status', 'connecting')
 
         try {
-            await this.page.goto(this.url, { waitUntil: 'load' });
+            await this.page.goto(url, { waitUntil: 'load' });
         } catch(e) {
             console.log('wrong url')
-            socketEmit('wrong-url', this.url)
+            this.socketEmit('bot-status', 'wrong-url')
         }
     }
 
@@ -122,7 +123,7 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async listenForChat() {
         console.log('start listening')
-        socketEmit('live', null)
+        this.socketEmit('bot-status', 'live')
 
         await this.page.exposeFunction('callbackChat', newChat);
 
@@ -188,22 +189,23 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async skipMicSetup() {
         console.log('setting up mic')
-        socketEmit('setup-mic', this.url)
+        this.socketEmit('bot-status', 'setup-mic')
 
         //#dialog-description-audio > div.techcheck-audio-skip.ng-scope > button => selector to ignore audio
         //#techcheck-video-ok-button => selector to set video as OK
         //await this.page.waitForXPath('//*[@id="dialog-description-audio"]/div[2]/button', {timeout: 10000000})
 
         await this.page.waitForSelector('#dialog-description-audio > div.techcheck-audio-skip.ng-scope', {timeout: 10000000})
-        await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
-        await this.click('#techcheck-video-ok-button')
+        //await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
+        //await this.click('#techcheck-video-ok-button')
+        await this.click('#techcheck-modal > button')
         await this.click('#techcheck-modal > button')
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
 
         console.log('mic set up')
-        socketEmit('setup-mic-done', this.url)
+        socketEmit('bot-status', 'setup-mic-done')
     }
 
     /**

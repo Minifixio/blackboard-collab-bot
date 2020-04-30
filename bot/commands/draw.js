@@ -44,6 +44,7 @@ async function call(content) {
 
 class Drawer {
 
+    // TODO : Check if the drawing is available
     async draw(points) {
 
         var page = currentBot.webdriver.page

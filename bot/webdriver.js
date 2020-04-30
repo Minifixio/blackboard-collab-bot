@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const cmdManager = require('./command_manager.js')
 const bot = require('./bot.js')
+var socketEmit = require('./main.js').socketEmit
 
 module.exports.WebBrowser = class WebBrowser {
 
@@ -24,6 +25,7 @@ module.exports.WebBrowser = class WebBrowser {
         this.page = await this.browser.newPage()
         // Unsing specific agent to make sure the website recognize the browser even in headless mode
         await this.page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')
+
         await this.gotTo(this.url)
         // TODO : add conneciton for prod
     }
@@ -33,7 +35,14 @@ module.exports.WebBrowser = class WebBrowser {
      * @param {string} url 
      */
     async gotTo(url) {
-        await this.page.goto(this.url, { waitUntil: 'load' });
+        socketEmit('connecting', this.url)
+
+        try {
+            await this.page.goto(this.url, { waitUntil: 'load' });
+        } catch(e) {
+            console.log('wrong url')
+            socketEmit('wrong-url', this.url)
+        }
     }
 
     async kill() {
@@ -90,26 +99,6 @@ module.exports.WebBrowser = class WebBrowser {
     }
 
     /**
-     * For testing purpose
-     */
-    async playAudio() {
-        await this.page.evaluate(() => {
-            var audio = document.createElement("audio");
-            audio.setAttribute("src", "http://localhost:3000/static/sound_effects/illuminati.mp3");
-            audio.setAttribute("crossorigin", "anonymous");
-            audio.setAttribute("controls", "");
-            audio.onplay = function() {
-              var stream = audio.captureStream();
-              navigator.mediaDevices.getUserMedia = async function() {
-                 return stream;
-              };
-            };
-
-            document.querySelector("body").appendChild(audio);
-        }); 
-    }
-
-    /**
      * Tool function to click an element on the page after waiting for its loading 
      * @param {string} selector 
      */
@@ -133,6 +122,8 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async listenForChat() {
         console.log('start listening')
+        socketEmit('live', null)
+
         await this.page.exposeFunction('callbackChat', newChat);
 
         await this.page.evaluate(() => {
@@ -171,6 +162,7 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async skipTestPage() {
         console.log('skipping test page')
+
         await this.page.reload()
         await this.page.waitForSelector('#field0')
 
@@ -196,16 +188,22 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async skipMicSetup() {
         console.log('setting up mic')
+        socketEmit('setup-mic', this.url)
+
         //#dialog-description-audio > div.techcheck-audio-skip.ng-scope > button => selector to ignore audio
         //#techcheck-video-ok-button => selector to set video as OK
+        //await this.page.waitForXPath('//*[@id="dialog-description-audio"]/div[2]/button', {timeout: 10000000})
 
-        await this.page.waitForXPath('//*[@id="dialog-description-audio"]/div[2]/button', {timeout: 10000000})
+        await this.page.waitForSelector('#dialog-description-audio > div.techcheck-audio-skip.ng-scope', {timeout: 10000000})
+        await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
+        await this.click('#techcheck-video-ok-button')
         await this.click('#techcheck-modal > button')
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
 
         console.log('mic set up')
+        socketEmit('setup-mic-done', this.url)
     }
 
     /**

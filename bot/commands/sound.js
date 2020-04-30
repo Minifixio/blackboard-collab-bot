@@ -3,13 +3,13 @@ var player = require('play-sound')(opts = {})
 var currentBot = require('../bot.js').currentBot
 
 let description = 'joue un son'
+let soundsPath = '../files/sounds/'
 
 const Command = require('../models/Command.js').Command
 
 var SoundCmd = new Command('son', call, description, false)
 module.exports.SoundCmd = SoundCmd
 
-let soundsPath = '../files/sounds/'
 
 let sounds = [
     {name: 'bruh', path: `${soundsPath}bruh.mp3`},
@@ -19,9 +19,8 @@ let sounds = [
     {name: 'yeah', path: `${soundsPath}yeah.mp3`},
 ]
 
-module.exports.MemeCmd = new Command('son', call, description, false)
+module.exports.sounds = sounds
 
-// TODO : Turn on mic
 async function call(content) {
 
     let desiredSound = sounds.find(sound => sound.name == content.message)

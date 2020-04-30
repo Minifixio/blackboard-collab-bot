@@ -1,5 +1,6 @@
 #main-div {
     width: 100%;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
 }
@@ -11,13 +12,17 @@
 }
 
 .statut-bot-card {
-    width: 40%;
+    width: 80%;
     padding: 10px;
+    text-align: center;
 }
 
-.statut-conenction-card {
+.statut-connection-card {
     margin: 10px;
     font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #d3d3d336;
 }
 
 .start-bot-card > mat-card-content {
@@ -48,4 +53,37 @@
 
 .mat-card {
     margin: 20px 30px 20px 30px;
+}
+
+.connected-icon {
+    color: limegreen;
+}
+
+.not-connected-icon {
+    color: red;
+}
+
+.statut-div {
+    display: flex;
+}
+
+.statut-div > *{
+    margin: 0 10px 0 10px;
+}
+
+.statut-url-card, .statut-name-card {
+    width: 50%;
+    text-align: start;
+    background-color: #d3d3d336;
+}
+
+.statut-name-url-div {
+    display: flex;
+}
+
+#disconnect-button {
+    width: 80%;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 20px;
 }

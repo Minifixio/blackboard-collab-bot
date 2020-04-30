@@ -9,21 +9,41 @@
             <form>
                 <mat-form-field>
                   <mat-label>Nom du BOT</mat-label>
-                  <input matInput placeholder="Joe">
+                  <input matInput [(ngModel)]="botName" [ngModelOptions]="{standalone: true}" placeholder="Joe">
                 </mat-form-field>
             </form>
 
             <form>
               <mat-form-field>
                 <mat-label>URL de la classe</mat-label>
-                <input matInput placeholder="https://eu.bbcollab.com/guest/...">
+                <input matInput [(ngModel)]="botUrl" [ngModelOptions]="{standalone: true}" placeholder="https://eu.bbcollab.com/guest/...">
               </mat-form-field>
             </form>
 
-            <app-commands-list></app-commands-list>
+            <mat-divider></mat-divider>
+
+            <app-commands-list #commands></app-commands-list>
 
         </mat-card-content>
-        <button id="start-button" mat-raised-button color="primary">Lancer !</button>
+
+        <mat-divider></mat-divider>
+
+        <button id="start-button" (click)="startBot()" mat-raised-button color="primary">Lancer !</button>
 
     </mat-card>
+
+    <mat-card class="statut-bot-card">
+      <mat-card-header>
+        <mat-card-title>Status du BOT</mat-card-title>
+      </mat-card-header>
+
+      <mat-card class="statut-conenction-card">
+          Status :
+          <mat-icon aria-hidden="false">signal_wifi_off</mat-icon>
+          <mat-icon aria-hidden="false">signal_wifi_4_bar</mat-icon>
+
+      </mat-card>
+
+    </mat-card>
+
 </div>

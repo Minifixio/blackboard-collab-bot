@@ -15,14 +15,18 @@ interface Command {
 })
 export class CommandsListComponent implements OnInit {
 
-  commands: Observable<Command[]>;
+  commands: Command[];
 
   constructor(
     private httpService: HttpService
   ) { }
 
   ngOnInit(): void {
-    this.commands = this.httpService.get('commands');
+    this.httpService.get('commands').toPromise().then(commands => this.commands = commands);
+  }
+
+  selectedCommands() {
+    return this.commands.filter(command => command.activated === true);
   }
 
 }

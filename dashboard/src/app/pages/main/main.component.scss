@@ -10,6 +10,16 @@
     margin-top: 20px;
 }
 
+.statut-bot-card {
+    width: 40%;
+    padding: 10px;
+}
+
+.statut-conenction-card {
+    margin: 10px;
+    font-size: 20px;
+}
+
 .start-bot-card > mat-card-content {
     display: flex;
     justify-content: center;
@@ -28,9 +38,14 @@
     width: 80%;
     height: 50px;
     font-size: 30px;
+    margin-top: 20px;
 }
 
 .mat-card-header {
     justify-content: center;
     font-size: 20px;
+}
+
+.mat-card {
+    margin: 20px 30px 20px 30px;
 }

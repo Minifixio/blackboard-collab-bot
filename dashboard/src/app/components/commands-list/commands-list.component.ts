@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
-import { Observable } from 'rxjs';
-
-interface Command {
-  name: string;
-  description: string;
-  activated: boolean;
-}
+import { Command } from 'src/app/models/Command';
 
 @Component({
   selector: 'app-commands-list',
@@ -22,7 +16,10 @@ export class CommandsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.httpService.get('commands').toPromise().then(commands => this.commands = commands);
+    this.httpService.get('commands').toPromise().then(commands => {
+      commands.forEach(cmd => cmd.activated = true);
+      this.commands = commands;
+    });
   }
 
   selectedCommands() {

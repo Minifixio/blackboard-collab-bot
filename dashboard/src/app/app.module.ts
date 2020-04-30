@@ -24,6 +24,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { DrawingsComponent } from './pages/drawings/drawings.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { RegisterComponent } from './pages/register/register.component';
     MatInputModule,
     MatCheckboxModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

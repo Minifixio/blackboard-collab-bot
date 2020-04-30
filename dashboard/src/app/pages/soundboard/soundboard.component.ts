@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
-
-interface Sound {
-  name: string;
-  path: string;
-}
+import { Sound } from 'src/app/models/Sound';
 
 @Component({
   selector: 'app-soundboard',

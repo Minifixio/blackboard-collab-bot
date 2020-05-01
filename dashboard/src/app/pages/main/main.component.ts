@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
   connectionMessage: string;
 
   botTextarea: string;
-  screenshotUrl: string;
+  screenshotUrl: 'http://localhost:3000/static/screenshot/screenshot.png';
 
   botNameInput: string;
   botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
@@ -103,11 +103,14 @@ export class MainComponent implements OnInit {
 
   async screenshot() {
     await this.httpService.get('screenshot').toPromise();
-    this.screenshotUrl = 'http://localhost:3000/static/screenshot/screenshot.png';
+  }
+
+  getScreenshot() {
+    const timeStamp = new Date().getTime();
+    return this.screenshotUrl + '?' + timeStamp;
   }
 
   socketCases(info) {
-    console.log(info);
     switch (info) {
       case 'connecting':
         this.loading = false;

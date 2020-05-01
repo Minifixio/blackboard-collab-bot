@@ -10,7 +10,6 @@ const Command = require('../models/Command.js').Command
 var SoundCmd = new Command('son', call, description, false)
 module.exports.SoundCmd = SoundCmd
 
-
 let sounds = [
     {name: 'bruh', path: `${soundsPath}bruh.mp3`},
     {name: 'pet1', path: `${soundsPath}fart1.mp3`},
@@ -50,6 +49,8 @@ async function call(content) {
     }
 
     player.play(path.resolve(__dirname, desiredSound.path))
+
+    return true
 }
 
 module.exports.playConnextionSound = function playConnextionSound() {

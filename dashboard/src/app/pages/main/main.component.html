@@ -82,7 +82,7 @@
               Voir ce que voit le BOT
             </button>
   
-            <img mat-card-image *ngIf="screenshotUrl" id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot">  
+            <img mat-card-image *ngIf="screenshotUrl" id="bot-screenshot-img" [src]="getScreenshot()" alt="Screenshot of the bot">  
           </div>
      
         </mat-card>

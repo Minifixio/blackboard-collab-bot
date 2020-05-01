@@ -64,6 +64,7 @@ app.get('/api/drawings', (req, res) => {
 // Take a screenshot
 app.get('/api/screenshot', async(req, res) => {
     let currentBot = bot.getBotInstance()
+
     await currentBot.webdriver.screenshot()
 
     res.send(true)

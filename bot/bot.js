@@ -29,13 +29,12 @@ class Bot {
 
             try {
                 await this.webdriver.initForTest()
+                this.connected = true
+                return true
             } catch(e) {
                 console.log('error while connecting')
                 return false
             }
-
-            this.connected = true
-            return true
         }
 
         // If the browser already exists
@@ -46,13 +45,12 @@ class Bot {
 
             try {
                 await this.webdriver.init()
+                this.connected = true
+                return true
             } catch(e) {
                 console.log('error while connecting')
                 return false
             }
-
-            this.connected = true
-            return true
         }
     }
 }

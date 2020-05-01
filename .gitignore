@@ -2,5 +2,6 @@
 /bot/tests
 /bot/chromedriver
 bot/dashboard/html/sound_effects/
+!bot/files/screenshot/.gitkeep
 bot/files/screenshot/screenshot.png
 bot/models/browser_endpoints.txt

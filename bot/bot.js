@@ -65,6 +65,11 @@ module.exports.connectBot = function connectBot(url) {
     currentBot.start(url)
 }
 
+module.exports.killBot = async function killBot() {
+    await currentBot.webdriver.kill()
+    currentBot = null;
+}
+
 module.exports.getBotInfos = function getBotInfos() {
 
     if (currentBot) {

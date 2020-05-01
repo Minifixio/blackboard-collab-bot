@@ -18,6 +18,8 @@ var imgs = [
     {name: 'zizi', path: `${imgPath}dicky.json`},
 ]
 
+module.exports.imgs = imgs
+
 async function call(content) {
     
     let currentBot = bot.getBotInstance()
@@ -29,13 +31,29 @@ async function call(content) {
         for (let img of imgs) {
             await currentBot.webdriver.sendChat('> ' + currentBot.tag + DrawCmd.name + ' ' + img.name)
         }
+
+        return false
     } else {
 
         if (drawer == null) {
             var imagePoints = JSON.parse(fs.readFileSync(path.resolve(__dirname, desiredImg.path)))
             drawer = new Drawer()
-            await drawer.draw(imagePoints, currentBot)
-            drawer = null
+
+            try {
+                await drawer.draw(imagePoints, currentBot)
+                drawer = null
+                return true
+            } catch (e) {
+
+                // If there is a username, it means the message comes from the chat and not from the dashboard
+                if(content.username) {
+                    await currentBot.webdriver.sendChat('Je ne peux pas dessiner sur la page actuelle !')
+                }
+
+                drawer = null
+                return false
+            }
+
         } else {
             await currentBot.webdriver.sendChat('Attends un peu que je finisse mon dessin !')
         }
@@ -48,12 +66,14 @@ class Drawer {
     // TODO : Check if the drawing is available
     async draw(points, currentBot) {
 
+        // If an error is caught, it means the pencil icon is not present and consequently, drawing is not possible
+        await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
+
         var page = currentBot.webdriver.page
-    
+        var drawingCanvas = await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
+
         try {
-            var drawingCanvas = await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
         } catch(e) {
-            await currentBot.webdriver.sendChat('Je ne peux pas dessiner sur la page actuelle !')
             return e
         }
     

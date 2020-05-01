@@ -32,37 +32,55 @@
 
     <mat-card *ngIf="currentBot && !loading" class="statut-bot-card">
       <mat-card-header>
-        <mat-card-title>Status du BOT</mat-card-title>
+        <mat-card-title>
+          <div class="statut-title-div">
+            Status du BOT <span>{{currentBot.name}}</span>
+          </div>
+        </mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
         <mat-card class="statut-connection-card">
-          Status :
+          <div class="statut-url-div">
+            <span>{{currentBot.url}}</span>
+          </div>
           <div *ngIf="!connected" class="statut-div">
+            Status :
             <mat-spinner diameter="20"></mat-spinner>
             {{connectionMessage}}
             <mat-icon class="not-connected-icon">signal_wifi_off</mat-icon>
           </div>
           
           <div *ngIf="connected" class="statut-div">
+            Status :
             Connecté
             <mat-icon class="connected-icon">signal_wifi_4_bar</mat-icon>
           </div>
         </mat-card>
+      
+        <mat-card class="bot-speak-card">        
+          <mat-form-field class="bot-speak-formfield">
+            <mat-label>Faire parler le BOT</mat-label>
+            <textarea matInput [(ngModel)]="botTextarea" class="bot-speak-textarea" placeholder="Ex. Je vais détruire le monde..."></textarea>
+          </mat-form-field>
 
-        <div class="statut-name-url-div">
-            <mat-card class="statut-name-card">
-              Nom du BOT :  <b>{{currentBot.name}}</b>
-            </mat-card>
-        
-            <mat-card class="statut-url-card">
-              Connecté à : <b>{{currentBot.url}}</b>
-            </mat-card>
-        </div>
+          <div class="bot-speak-buttons-div">
+            <button mat-raised-button class="bot-speak-button" color="accent" (click)="sendText()">
+              <mat-icon>keyboard</mat-icon>
+              Envoyer en CHAT
+            </button>
+
+            <button mat-raised-button class="bot-speak-button" color="accent" (click)="sendVoice()">
+              <mat-icon>keyboard_voice</mat-icon>
+              Envoyer en VOIX
+            </button>
+          </div>
+ 
+
+        </mat-card>
 
         <button id="disconnect-button" (click)="disconnectBot()" mat-raised-button color="primary">Déconnecter</button>
       </mat-card-content>
-     
     </mat-card>
 
     <div *ngIf="loading">

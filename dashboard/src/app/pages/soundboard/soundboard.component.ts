@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
 import { Sound } from 'src/app/models/Sound';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-soundboard',
@@ -14,7 +15,8 @@ export class SoundboardComponent implements OnInit {
   cols = 0;
 
   constructor(
-    private httpService: HttpService
+    private httpService: HttpService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +27,11 @@ export class SoundboardComponent implements OnInit {
   }
 
   async playSound(name) {
-    await this.httpService.post('play-sound', {name}).toPromise();
+    const res = await this.httpService.post('sound', {name}).toPromise();
+
+    if (!res) {
+      this.toastService.showToast('Aucun BOT connecté pour le moment...', 5000)
+    }
   }
 
 }

@@ -29,7 +29,7 @@ module.exports.bindCommand = async function bindCommand(commandName, content) {
         if (command.activated) {
             await command.call(content)
         } else {
-            await currentBot.webdriver.sendChat("Désolé cette commande n'est activée par l'administrateur")
+            await currentBot.webdriver.sendChat("Désolé cette commande n'est pas activée par l'administrateur")
         }
     } else {
         await currentBot.webdriver.sendChat("Désolé cette commande n'est pas valide")

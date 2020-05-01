@@ -17,6 +17,10 @@
     text-align: center;
 }
 
+.statut-bot-card > mat-card-header {
+    margin-bottom: 10px;
+}
+
 .statut-connection-card {
     margin: 10px;
     font-size: 20px;
@@ -71,19 +75,56 @@
     margin: 0 10px 0 10px;
 }
 
-.statut-url-card, .statut-name-card {
-    width: 50%;
-    text-align: start;
-    background-color: #d3d3d336;
-}
-
-.statut-name-url-div {
-    display: flex;
-}
-
 #disconnect-button {
     width: 80%;
     height: 50px;
     font-size: 20px;
     margin-top: 20px;
+}
+
+.statut-url-div > span {
+    text-align: start;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 100;
+}
+
+.statut-title-div {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.statut-title-div > span {
+    margin-top: 10px;
+    font-size: xx-large;
+    text-transform: uppercase;
+}
+
+.bot-speak-card {
+    margin: 10px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #d3d3d336;
+}
+
+.bot-speak-textarea {
+    width: 100%;
+}
+
+.bot-speak-buttons-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.bot-speak-button {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.bot-speak-formfield {
+    width: 100%;
+    margin-right: 20px;
 }

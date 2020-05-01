@@ -8,6 +8,8 @@ const cors = require('cors');
 
 const commandsManager = require('./command_manager.js')
 const soundCommand = require('./commands/sound.js')
+const drawCommand = require('./commands/draw.js')
+const speakCommand = require('./commands/speak.js')
 var bot = require('./bot.js')
 
 app.use(express.json())
@@ -32,6 +34,11 @@ app.post('/api/start', (req, res) => {
     res.send(true)
 })
 
+app.get('/api/disconnect', async(req, res) => {
+    await bot.killBot()
+    res.send(true)
+})
+
 // Get current bot
 app.get('/api/bot', (req, res) => {
     res.json(bot.getBotInfos())
@@ -47,13 +54,53 @@ app.get('/api/sounds', (req, res) => {
     res.json(soundCommand.sounds)
 })
 
-app.post('/api/play-sound', async(req, res) => {
-    let soundPlayed = await soundCommand.SoundCmd.call({message: req.body.name})
+// Get the list of sounds
+app.get('/api/drawings', (req, res) => {
+    res.json(drawCommand.imgs)
+})
 
-    if (soundPlayed) {
+app.post('/api/sound', async(req, res) => {
+    let botInfos = bot.getBotInfos()
+
+    if (botInfos != null) {
+        let soundPlayed = await soundCommand.SoundCmd.call({message: req.body.name})
+        res.json(soundPlayed) // true if the sound played correctly, false otherwise
+    } else {
+        res.send(false)
+    }
+
+})
+
+app.post('/api/draw', async(req, res) => {
+    let botInfos = bot.getBotInfos()
+
+    if (botInfos != null) {
+        let drawing = await drawCommand.DrawCmd.call({message: req.body.name})
+        res.json(drawing) // true if the drawing is available, false otherwise
+    } else {
+        res.send(false)
+    }
+})
+
+app.post('/api/text', async(req, res) => {
+    let currentBot = bot.getBotInstance()
+
+    if (currentBot) {
+        await currentBot.webdriver.sendChat(req.body.message)
         res.json(true)
     } else {
         res.json(false)
+    }
+})
+
+app.post('/api/speak', async(req, res) => {
+    let botInfos = bot.getBotInfos()
+    
+    if (botInfos != null) {
+        let speech = await speakCommand.SpeakCmd.call(req.body)
+        res.json(speech) // true if the mic is available, false otherwise
+    } else {
+        res.send(false)
     }
 })
 

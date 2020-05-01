@@ -6,6 +6,7 @@ import { SocketService } from 'src/app/services/socket.service';
 import { Observable } from 'rxjs';
 import { Bot } from 'src/app/models/Bot';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-main',
@@ -24,6 +25,8 @@ export class MainComponent implements OnInit {
   connected = false;
   connectionMessage: string;
 
+  botTextarea: string;
+
   botNameInput: string;
   botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
 
@@ -31,7 +34,7 @@ export class MainComponent implements OnInit {
     private auth: AuthService,
     private httpService: HttpService,
     private socketService: SocketService,
-    private snackBar: MatSnackBar
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +58,7 @@ export class MainComponent implements OnInit {
   async startBot() {
 
     if (!this.botNameInput || !(this.botUrlInput.includes('bbcollab.com') || this.botUrlInput.includes('blackboard'))) {
-      this.showToastError('Veuillez remplir les champs correctement avant!');
+      this.toastService.showToast('Veuillez remplir les champs correctement avant!', 5000);
     } else {
 
       this.currentBot = {
@@ -71,14 +74,30 @@ export class MainComponent implements OnInit {
     }
   }
 
-  disconnectBot() {
-
+  async disconnectBot() {
+    await this.httpService.get('disconnect');
+    this.currentBot = null;
   }
 
-  showToastError(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 5000
-    });
+  async sendText() {
+    const res = await this.httpService.post('text', {
+      message: this.botTextarea
+    }).toPromise();
+
+    if (res) {
+      this.toastService.showToast('Le message a bien été envoyé !', 5000)
+    }
+  }
+
+  async sendVoice() {
+    const res = await this.httpService.post('speak', {
+      message: this.botTextarea,
+      username: this.currentBot.name
+    }).toPromise();
+
+    if (res) {
+      this.toastService.showToast('Le message a bien été envoyé !', 5000);
+    }
   }
 
   socketCases(info) {

@@ -16,9 +16,17 @@ export class SocketService {
   setup() {
     this.socket = io(this.urlApi);
     this.alive = true;
-    this.socket.on('connect_error', (err) => {
+    this.socket.on('connect_error', () => {
       this.alive = false;
-    })
+    });
+
+    this.socket.on('reconnect', () => {
+      this.alive = true;
+    });
+
+    this.socket.on('connect', () => {
+      this.alive = true;
+    });
   }
 
   emit(tag, params) {

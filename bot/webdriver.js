@@ -186,13 +186,14 @@ module.exports.WebBrowser = class WebBrowser {
         await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
         //await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
         //await this.click('#techcheck-video-ok-button')
+        await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope > button')
         await this.click('#techcheck-modal > button')
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
 
         console.log('mic set up')
-        socketEmit('bot-status', 'setup-mic-done')
+        this.socketEmit('bot-status', 'setup-mic-done')
     }
 
     /**
@@ -249,7 +250,7 @@ function newChat(chat) {
     if (valid) {
         let command = message.substring(currentBot.tag.length).trim().split(' ')[0]
         let content = {
-            message: message.substring(currentBot.tag.length).trim().split(' ')[1],
+            message: message.substring(currentBot.tag.length + command.length).trim(),
             username: username
         }
 

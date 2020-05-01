@@ -39,7 +39,7 @@
     <router-outlet *ngIf="socketService.alive"></router-outlet>
 
     <div *ngIf="!socketService.alive" id="error-socket-div">
-      <mat-title>ERREUR DE CONNEXION AU SERVEUR</mat-title>
+      <div>ERREUR DE CONNEXION AU SERVEUR</div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

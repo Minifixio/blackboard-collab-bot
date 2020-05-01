@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
   opened = true;
 
   constructor(
-    private socketService: SocketService
+    public socketService: SocketService
   ) { }
 
   ngOnInit(): void {

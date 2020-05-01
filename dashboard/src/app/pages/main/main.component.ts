@@ -5,7 +5,6 @@ import { HttpService } from 'src/app/services/http.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { Observable } from 'rxjs';
 import { Bot } from 'src/app/models/Bot';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({

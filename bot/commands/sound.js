@@ -17,6 +17,7 @@ let sounds = [
     {name: 'yay', path: `${soundsPath}yay.mp3`},
     {name: 'yeah', path: `${soundsPath}yeah.mp3`},
     {name: 'snoopdogg', path: `${soundsPath}snoopdogg.mp3`},
+    {name: 'illuminati', path: `${soundsPath}illuminati.mp3`}
 ]
 
 module.exports.sounds = sounds

@@ -47,10 +47,105 @@ module.exports.WebBrowser = class WebBrowser {
         }
     }
 
+
+    /**
+     * Connect to the class
+     */
+    async connectToClass() {
+
+        try {
+            await this.page.waitForSelector('#guest-name', {tiemout: 10000})
+            await this.page.focus('#guest-name')
+            await this.page.type('#guest-name', this.botName)
+            await this.click('#launch-html-guest')
+            return true
+        } catch(e) {
+            this.socketEmit('bot-status', 'connection-error')
+            bot.killBot()
+            return false
+        }
+    }
+
+    /**
+     * Stop the browser
+     */
     async kill() {
         await this.browser.close()
     }
 
+    /**
+     * Tool function to click an element on the page after waiting for its loading 
+     * @param {string} selector 
+     */
+    async click(selector) {
+        await this.page.waitForSelector(selector, {timeout: 100000})
+        await this.page.click(selector)
+    }
+
+    /**
+     * Send a chat
+     * @param {string} msg 
+     */
+    async sendChat(msg) {
+        await this.page.focus('#message-input')
+        await this.page.type('#message-input', msg)
+        await this.page.keyboard.press('Enter')
+    }
+    
+    /**
+     * Take a screenshot and replace the actual one
+     */
+    async screenshot() {
+        await this.page.screenshot({path: './files/screenshot/screenshot.png'})
+    }
+
+    /**
+     * Skipping the mic page
+     */
+    async skipMicSetup() {
+        console.log('setting up mic')
+        this.socketEmit('bot-status', 'setup-mic')
+
+        await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
+        soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
+        await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
+        await this.click('#techcheck-video-ok-button')
+        await this.click('#announcement-modal-page-wrap > button')
+        await this.click('#side-panel-open')
+        await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
+
+        console.log('mic set up')
+        this.socketEmit('bot-status', 'setup-mic-done')
+    }
+
+    /**
+     * For testing purpose only
+     */
+    async skipTestPage() {
+        console.log('skipping test page')
+
+        await this.page.reload()
+        await this.page.waitForSelector('#field0')
+
+        var inputs = [
+            {selector: '#field0', name: this.botName},
+            {selector: '#field1', name: this.botName},
+            {selector: '#field2', name: `${this.botName}@${this.botName}.bot`},
+        ]
+
+        for (let input of inputs) {
+            await this.page.$eval(input.selector, (el, value) => el.value = value, input.name)
+        }
+
+        await this.page.waitFor(2000)
+        await this.page.click('#SessionStartButton')
+
+        console.log('test page skipped')
+    }
+
+    /**
+     * For testing purpose only
+     */
     async initForTest() {
         // Using WSEnpoint to reuse old session (so I don't have to restart the browser each time)
         // Calling reuse_browser.js first to make sure a session is running in the background
@@ -86,83 +181,6 @@ module.exports.WebBrowser = class WebBrowser {
             this.listenForChat()
         })
 
-    }
-
-    /**
-     * Tool function to click an element on the page after waiting for its loading 
-     * @param {string} selector 
-     */
-    async click(selector) {
-        await this.page.waitForSelector(selector, {timeout: 100000})
-        await this.page.click(selector)
-    }
-
-    /**
-     * Send a chat
-     * @param {string} msg 
-     */
-    async sendChat(msg) {
-        await this.page.focus('#message-input')
-        await this.page.type('#message-input', msg)
-        await this.page.keyboard.press('Enter')
-    }
-    
-    /**
-     * Take a screenshot and replace the actual one
-     */
-    async screenshot() {
-        await this.page.screenshot({path: './files/screenshot/screenshot.png'})
-    }
-
-    /**
-     * For testing purpose only
-     */
-    async skipTestPage() {
-        console.log('skipping test page')
-
-        await this.page.reload()
-        await this.page.waitForSelector('#field0')
-
-        var inputs = [
-            {selector: '#field0', name: this.botName},
-            {selector: '#field1', name: this.botName},
-            {selector: '#field2', name: `${this.botName}@${this.botName}.bot`},
-        ]
-
-        for (let input of inputs) {
-            await this.page.$eval(input.selector, (el, value) => el.value = value, input.name)
-        }
-
-        await this.page.waitFor(2000)
-        await this.page.click('#SessionStartButton')
-
-        console.log('test page skipped')
-    }
-
-    /**
-     * Skipping the mic page
-     * TODO : Make sure to select the correct source according to the app mic input
-     */
-    async skipMicSetup() {
-        console.log('setting up mic')
-        this.socketEmit('bot-status', 'setup-mic')
-
-        //#dialog-description-audio > div.techcheck-audio-skip.ng-scope > button => selector to ignore audio
-        //#techcheck-video-ok-button => selector to set video as OK
-        //await this.page.waitForXPath('//*[@id="dialog-description-audio"]/div[2]/button', {timeout: 10000000})
-
-        await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
-        //await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
-        //await this.click('#techcheck-video-ok-button')
-        soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
-        await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
-        await this.click('#techcheck-video-ok-button')
-        await this.click('#announcement-modal-page-wrap > button')
-        await this.click('#side-panel-open')
-        await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
-
-        console.log('mic set up')
-        this.socketEmit('bot-status', 'setup-mic-done')
     }
 
     /**

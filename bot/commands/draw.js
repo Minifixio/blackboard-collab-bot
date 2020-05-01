@@ -11,11 +11,13 @@ var DrawCmd = new Command('dessine', call, description, false)
 module.exports.DrawCmd = DrawCmd
 
 var imgs = [
-    {name: 'thug', path: `${imgPath}thug_glasses.json`},
+    {name: 'thug', path: `${imgPath}thug.json`},
     {name: 'loutre', path: `${imgPath}meerkat.json`},
-    {name: 'trollface', path: `${imgPath}troll.json`},
-    {name: 'superzizi', path: `${imgPath}nsfw.json`},
-    {name: 'zizi', path: `${imgPath}dicky.json`},
+    {name: 'trollface', path: `${imgPath}trollface.json`},
+    {name: 'superzizi', path: `${imgPath}superzizi.json`},
+    {name: 'zizi', path: `${imgPath}zizi.json`},
+    {name: 'lolface', path: `${imgPath}lolface.json`},
+    {name: 'poop', path: `${imgPath}poop.json`}
 ]
 
 module.exports.imgs = imgs

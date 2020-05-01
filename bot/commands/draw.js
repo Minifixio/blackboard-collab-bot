@@ -65,11 +65,11 @@ class Drawer {
 
     // TODO : Check if the drawing is available
     async draw(points, currentBot) {
+        var page = currentBot.webdriver.page
 
         // If an error is caught, it means the pencil icon is not present and consequently, drawing is not possible
         await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
 
-        var page = currentBot.webdriver.page
         var drawingCanvas = await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
 
         try {

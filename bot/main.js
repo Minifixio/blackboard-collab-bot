@@ -83,7 +83,6 @@ app.post('/api/sound', async(req, res) => {
 
 app.post('/api/draw', async(req, res) => {
     let botInfos = bot.getBotInfos()
-
     if (botInfos != null) {
         let drawing = await drawCommand.DrawCmd.call({message: req.body.name})
         res.json(drawing) // true if the drawing is available, false otherwise

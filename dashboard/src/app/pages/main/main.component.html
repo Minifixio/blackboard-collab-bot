@@ -45,14 +45,12 @@
             <span>{{currentBot.url}}</span>
           </div>
           <div *ngIf="!connected" class="statut-div">
-            Status :
             <mat-spinner diameter="20"></mat-spinner>
             {{connectionMessage}}
             <mat-icon class="not-connected-icon">signal_wifi_off</mat-icon>
           </div>
           
           <div *ngIf="connected" class="statut-div">
-            Status :
             Connecté
             <mat-icon class="connected-icon">signal_wifi_4_bar</mat-icon>
           </div>
@@ -76,8 +74,19 @@
             </button>
           </div>
  
-
         </mat-card>
+
+        <mat-card class="bot-screenshot-card">
+          <div class="bot-screenshot-div">
+            <button mat-raised-button class="bot-screenshot-button" color="accent" (click)="screenshot()">
+              Voir ce que voit le BOT
+            </button>
+  
+            <img mat-card-image *ngIf="screenshotUrl" id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot">  
+          </div>
+     
+        </mat-card>
+
 
         <button id="disconnect-button" (click)="disconnectBot()" mat-raised-button color="primary">Déconnecter</button>
       </mat-card-content>

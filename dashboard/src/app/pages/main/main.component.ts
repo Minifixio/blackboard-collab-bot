@@ -26,6 +26,7 @@ export class MainComponent implements OnInit {
   connectionMessage: string;
 
   botTextarea: string;
+  screenshotUrl: string;
 
   botNameInput: string;
   botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
@@ -98,6 +99,11 @@ export class MainComponent implements OnInit {
     if (res) {
       this.toastService.showToast('Le message a bien été envoyé !', 5000);
     }
+  }
+
+  async screenshot() {
+    await this.httpService.get('screenshot').toPromise();
+    this.screenshotUrl = 'http://localhost:3000/static/screenshot/screenshot.png';
   }
 
   socketCases(info) {

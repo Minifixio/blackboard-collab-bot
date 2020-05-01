@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const cmdManager = require('./command_manager.js')
+const soundCommand = require('./commands/sound.js')
 const bot = require('./bot.js')
 var sockets = require('./main.js')
 
@@ -18,7 +19,7 @@ module.exports.WebBrowser = class WebBrowser {
 
         // Start pupperteer
         this.browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             args: [ '--use-fake-ui-for-media-stream'],
             ignoreDefaultArgs: ['--mute-audio']
         });
@@ -105,45 +106,12 @@ module.exports.WebBrowser = class WebBrowser {
         await this.page.type('#message-input', msg)
         await this.page.keyboard.press('Enter')
     }
-
+    
     /**
-     * Start the listening for chat process
+     * Take a screenshot and replace the actual one
      */
-    async listenForChat() {
-        console.log('start listening')
-        this.socketEmit('bot-status', 'live')
-
-        await this.page.exposeFunction('callbackChat', newChat);
-
-        await this.page.evaluate(() => {
-            var targetNode = document.querySelector("#chat-channel-history");
-            var config = { childList: true };
-            var obsCallback = function(mutationsList, observer) {
-                for(let mutation of mutationsList) {
-                    if (mutation.type === 'childList') {
-                        console.log('A child node has been added or removed.');
-                        console.log(mutation.addedNodes[0].querySelector("div > div > div > p.activity-body.chat-message__body.ng-binding").textContent);
-                        var messageNode = mutation.addedNodes[0].querySelector("div > div > div > p.activity-body.chat-message__body.ng-binding");
-                        var username = '';
-
-                        if (messageNode.parentElement.getElementsByTagName('h4').length == 0) {
-                            for (let children of targetNode.children) {
-                                
-                                if (children.getElementsByTagName('h4').length > 0) {
-                                    username = children.getElementsByTagName('h4')[0].textContent;
-                                }
-                            }
-                        } else {
-                            username = messageNode.parentElement.getElementsByTagName('h4')[0].textContent.trim()
-                        }
-                        console.log([messageNode.textContent, username])
-                        callbackChat([messageNode.textContent, username]);
-                    }
-                }
-            };
-            var observer = new MutationObserver(obsCallback);
-            observer.observe(targetNode, config);
-        })
+    async screenshot() {
+        await this.page.screenshot({path: './files/screenshot/screenshot.png'})
     }
 
     /**
@@ -186,14 +154,55 @@ module.exports.WebBrowser = class WebBrowser {
         await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
         //await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope')
         //await this.click('#techcheck-video-ok-button')
-        await this.click('#dialog-description-audio > div.techcheck-audio-skip.ng-scope > button')
-        await this.click('#techcheck-modal > button')
+        soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
+        await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
+        await this.click('#techcheck-video-ok-button')
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
 
         console.log('mic set up')
         this.socketEmit('bot-status', 'setup-mic-done')
+    }
+
+    /**
+     * Start the listening for chat process
+     */
+    async listenForChat() {
+        console.log('start listening')
+        this.socketEmit('bot-status', 'live')
+
+        await this.page.exposeFunction('callbackChat', newChat);
+
+        await this.page.evaluate(() => {
+            var targetNode = document.querySelector("#chat-channel-history");
+            var config = { childList: true };
+            var obsCallback = function(mutationsList, observer) {
+                for(let mutation of mutationsList) {
+                    if (mutation.type === 'childList') {
+                        console.log('A child node has been added or removed.');
+                        console.log(mutation.addedNodes[0].querySelector("div > div > div > p.activity-body.chat-message__body.ng-binding").textContent);
+                        var messageNode = mutation.addedNodes[0].querySelector("div > div > div > p.activity-body.chat-message__body.ng-binding");
+                        var username = '';
+
+                        if (messageNode.parentElement.getElementsByTagName('h4').length == 0) {
+                            for (let children of targetNode.children) {
+                                
+                                if (children.getElementsByTagName('h4').length > 0) {
+                                    username = children.getElementsByTagName('h4')[0].textContent;
+                                }
+                            }
+                        } else {
+                            username = messageNode.parentElement.getElementsByTagName('h4')[0].textContent.trim()
+                        }
+                        console.log([messageNode.textContent, username])
+                        callbackChat([messageNode.textContent, username]);
+                    }
+                }
+            };
+            var observer = new MutationObserver(obsCallback);
+            observer.observe(targetNode, config);
+        })
     }
 
     /**

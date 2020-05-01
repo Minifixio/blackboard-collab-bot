@@ -17,6 +17,7 @@ let sounds = [
     {name: 'pet2', path: `${soundsPath}fart2.mp3`},
     {name: 'yay', path: `${soundsPath}yay.mp3`},
     {name: 'yeah', path: `${soundsPath}yeah.mp3`},
+    {name: 'snoopdogg', path: `${soundsPath}snoopdogg.mp3`},
 ]
 
 module.exports.sounds = sounds
@@ -49,4 +50,8 @@ async function call(content) {
     }
 
     player.play(path.resolve(__dirname, desiredSound.path))
+}
+
+module.exports.playConnextionSound = function playConnextionSound() {
+    player.play(path.resolve(__dirname, '../files/sounds/beep.mp3'))
 }

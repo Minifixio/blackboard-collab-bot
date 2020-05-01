@@ -14,6 +14,8 @@ var bot = require('./bot.js')
 
 app.use(express.json())
 app.use(cors())
+app.use('/static', express.static('files'));
+
 app.all("/*", function(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -59,6 +61,14 @@ app.get('/api/drawings', (req, res) => {
     res.json(drawCommand.imgs)
 })
 
+// Take a screenshot
+app.get('/api/screenshot', async(req, res) => {
+    let currentBot = bot.getBotInstance()
+    await currentBot.webdriver.screenshot()
+
+    res.send(true)
+})
+
 app.post('/api/sound', async(req, res) => {
     let botInfos = bot.getBotInfos()
 
@@ -95,7 +105,7 @@ app.post('/api/text', async(req, res) => {
 
 app.post('/api/speak', async(req, res) => {
     let botInfos = bot.getBotInfos()
-    
+
     if (botInfos != null) {
         let speech = await speakCommand.SpeakCmd.call(req.body)
         res.json(speech) // true if the mic is available, false otherwise

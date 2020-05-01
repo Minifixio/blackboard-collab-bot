@@ -5,7 +5,7 @@ const fs = require('fs');
     console.log('reuse service started')
 
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: [ '--use-fake-ui-for-media-stream'],
         ignoreDefaultArgs: ['--mute-audio']});
     const page = await browser.newPage();

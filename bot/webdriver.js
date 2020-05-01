@@ -64,7 +64,7 @@ module.exports.WebBrowser = class WebBrowser {
                 this.browser = await puppeteer.connect({browserWSEndpoint: browserWSEndpoint})
                 let pages = await this.browser.pages()
                 this.page = pages.find(page => page.url().includes('blackboard') || page.url().includes('bbcollab'))
-            } catch {
+            } catch(e) {
                 await this.init()
             }
 

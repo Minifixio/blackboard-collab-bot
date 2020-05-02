@@ -123,6 +123,7 @@ export class MainComponent implements OnInit {
       case 'connecting':
         this.loading = false;
         this.connected = false;
+        this.screenshot();
         this.connectionMessage = 'Connexion en cours';
         break;
 
@@ -142,22 +143,26 @@ export class MainComponent implements OnInit {
       case 'skipping-test':
         this.loading = false;
         this.connected = false;
+        this.screenshot();
         this.connectionMessage = 'Le bot passe la page de test';
         break;
 
       case 'bot-infos':
         this.currentBot = info;
+        this.screenshot();
         break;
 
       case 'setup-mic':
         this.loading = false;
         this.connected = false;
+        this.screenshot();
         this.connectionMessage = 'Le bot accède au micro';
         break;
 
       case 'setup-mic-done':
         this.loading = false;
         this.connected = false;
+        this.screenshot();
         this.connectionMessage = 'Micro mis en place';
         break;
     }

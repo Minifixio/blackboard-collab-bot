@@ -112,19 +112,25 @@ module.exports.WebBrowser = class WebBrowser {
         this.socketEmit('bot-status', 'setup-mic')
 
         await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
+        console.log('mic selection panel is here')
 
         var micButtonDisabled = await this.page.evaluate(() => {
             return document.querySelector("#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button").disabled
         })
 
         if (micButtonDisabled) {
+            console.log('mic button disabled, playing sound')
             soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
         }
 
         await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
+        console.log('audio setup')
         await this.click('#techcheck-video-ok-button')
+        console.log('video setup')
         await this.click('#announcement-modal-page-wrap > button')
+        console.log('opening side panel')
         await this.click('#side-panel-open')
+        console.log('side panel opened')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
         console.log('mic set up')
         this.socketEmit('bot-status', 'setup-mic-done')

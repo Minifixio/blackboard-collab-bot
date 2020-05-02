@@ -15,6 +15,11 @@ var bot = require('./bot.js')
 app.use(express.json())
 app.use(cors())
 app.use('/static', express.static('files'));
+app.use(express.static('dist'));
+
+app.all("/dashboard*", function(req, res){
+    res.sendFile("index.html", { root: __dirname + "/dist"});
+});
 
 app.all("/*", function(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
@@ -37,7 +42,6 @@ app.post('/api/start', (req, res) => {
 })
 
 app.post('/api/click', (req, res) => {
-    console.log('click')
     let currentBot = bot.getBotInstance()
     currentBot.webdriver.mouseClick(req.body.x, req.body.y)
     res.send(true)

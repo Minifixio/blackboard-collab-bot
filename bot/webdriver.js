@@ -123,6 +123,7 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async skipTestPage() {
         console.log('skipping test page')
+        this.socketEmit('bot-status', 'skipping-test')
 
         await this.page.reload()
         await this.page.waitForSelector('#field0')

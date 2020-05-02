@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
   connectionMessage: string;
 
   botTextarea: string;
-  screenshotUrl = 'http://localhost:3000/static/screenshot/screenshot.png';
+  screenshotUrl: string;
 
   botNameInput: string;
   botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
@@ -101,14 +101,12 @@ export class MainComponent implements OnInit {
   }
 
   async screenshot() {
-    await this.httpService.get('screenshot').toPromise();
-  }
-
-  getScreenshot() {
+    const url = 'http://localhost:3000/static/screenshot/screenshot.png';
     const timeStamp = new Date().getTime();
-    return this.screenshotUrl + '?' + timeStamp;
+    await this.httpService.get('screenshot').toPromise();
+    this.screenshotUrl = url + '?' + timeStamp;
   }
-
+  
   socketCases(info) {
     switch (info) {
       case 'connecting':
@@ -126,6 +124,12 @@ export class MainComponent implements OnInit {
         break;
 
       case 'error':
+        break;
+
+      case 'skipping-test':
+        this.loading = false;
+        this.connected = false;
+        this.connectionMessage = 'Le bot passe la page de test';
         break;
 
       case 'bot-infos':

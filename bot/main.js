@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 app.post('/api/start', (req, res) => {
     bot.initBot(req.body.name, '!')
     commandsManager.registerCommands(req.body.commands)
-    bot.connectBot(req.body.url)
+    let started = bot.connectBot(req.body.url)
 
-    res.send(true)
+    res.send(started)
 })
 
 app.get('/api/disconnect', async(req, res) => {

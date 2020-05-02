@@ -59,8 +59,9 @@ module.exports.initBot = function initBot(name, tag) {
     currentBot = new Bot(name, tag)
 }
 
-module.exports.connectBot = function connectBot(url) {
-    currentBot.start(url)
+module.exports.connectBot = async function connectBot(url) {
+    let started = await currentBot.start(url)
+    return started
 }
 
 module.exports.killBot = async function killBot() {

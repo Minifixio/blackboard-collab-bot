@@ -68,9 +68,14 @@ export class MainComponent implements OnInit {
         connected: true
       };
 
-      await this.httpService.post('start', this.currentBot).toPromise();
-
       this.loading = true;
+      const started = await this.httpService.post('start', this.currentBot).toPromise();
+
+      if (!started) {
+        this.loading = false;
+        this.currentBot = null;
+        this.toastService.showToast('Erreur lors de la connexion avec le BOT', 6000);
+      }
     }
   }
 
@@ -85,7 +90,7 @@ export class MainComponent implements OnInit {
     }).toPromise();
 
     if (res) {
-      this.toastService.showToast('Le message a bien été envoyé !', 5000)
+      this.toastService.showToast('Le message a bien été envoyé !', 5000);
     }
   }
 
@@ -106,7 +111,13 @@ export class MainComponent implements OnInit {
     await this.httpService.get('screenshot').toPromise();
     this.screenshotUrl = url + '?' + timeStamp;
   }
-  
+
+  onKeydown(event) {
+    if (event.key === 'Enter') {
+      this.startBot();
+    }
+  }
+
   socketCases(info) {
     switch (info) {
       case 'connecting':

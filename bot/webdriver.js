@@ -18,11 +18,16 @@ module.exports.WebBrowser = class WebBrowser {
     async init() {
 
         // Start pupperteer
-        this.browser = await puppeteer.launch({
-            headless: true,
-            args: [ '--use-fake-ui-for-media-stream'],
-            ignoreDefaultArgs: ['--mute-audio']
-        });
+        try {
+            this.browser = await puppeteer.launch({
+                headless: true,
+                args: [ '--use-fake-ui-for-media-stream'],
+                ignoreDefaultArgs: ['--mute-audio']
+            });
+        } catch(e) {
+            console.log(e)
+            return false
+        }
 
         this.page = await this.browser.newPage()
         // Unsing specific agent to make sure the website recognize the browser even in headless mode
@@ -107,13 +112,20 @@ module.exports.WebBrowser = class WebBrowser {
         this.socketEmit('bot-status', 'setup-mic')
 
         await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
-        soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
+
+        var micButtonDisabled = await this.page.evaluate(() => {
+            return document.querySelector("#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button").disabled
+        })
+
+        if (micButtonDisabled) {
+            soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
+        }
+
         await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
         await this.click('#techcheck-video-ok-button')
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
-
         console.log('mic set up')
         this.socketEmit('bot-status', 'setup-mic-done')
     }

@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path');
 var bot = require('../bot.js')
 const Command = require('../models/Command.js').Command
-let imgPath = '../models/drawings/'
+let imgPath = '../files/drawings/path/'
 
 let description = 'dessiner sur le tableau (faire !dessine pour voir les desisns disponibles)'
 let drawer = null

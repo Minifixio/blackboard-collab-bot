@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
   connectionMessage: string;
 
   botTextarea: string;
-  screenshotUrl: 'http://localhost:3000/static/screenshot/screenshot.png';
+  screenshotUrl = 'http://localhost:3000/static/screenshot/screenshot.png';
 
   botNameInput: string;
   botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;

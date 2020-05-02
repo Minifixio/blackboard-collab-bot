@@ -6,7 +6,9 @@
                 <span class="drawing-card-spann">
                     {{drawing.name}}
                 </span>
+                <img mat-card-image class="drawing-svg" [src]="getUrl(drawing.name)" alt="Screenshot of the bot">  
             </button>
+
 
         </mat-grid-tile>
     </mat-grid-list>

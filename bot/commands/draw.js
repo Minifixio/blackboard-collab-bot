@@ -12,7 +12,7 @@ module.exports.DrawCmd = DrawCmd
 
 var imgs = [
     {name: 'thug', path: `${imgPath}thug.json`},
-    {name: 'loutre', path: `${imgPath}meerkat.json`},
+    {name: 'loutre', path: `${imgPath}loutre.json`},
     {name: 'trollface', path: `${imgPath}trollface.json`},
     {name: 'superzizi', path: `${imgPath}superzizi.json`},
     {name: 'zizi', path: `${imgPath}zizi.json`},

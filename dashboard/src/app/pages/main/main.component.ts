@@ -121,6 +121,8 @@ export class MainComponent implements OnInit {
         break;
 
       case 'wrong-url':
+        this.currentBot = null;
+        this.toastService.showToast('L\'URL n\'est pas bonne !', 6000);
         break;
 
       case 'error':

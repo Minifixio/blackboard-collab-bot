@@ -32,4 +32,8 @@ export class DrawingsComponent implements OnInit {
       this.toastService.showToast('Erreur, le BOT ne peut pas dessiner. Le dessin n\'est pas activé sur la page', 6000);
     }
   }
+
+  getUrl(name) {
+    return `http://localhost:3000/static/drawings/svg/${name}.svg`
+  }
 }

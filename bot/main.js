@@ -36,6 +36,14 @@ app.post('/api/start', (req, res) => {
     res.send(started)
 })
 
+app.post('/api/click', (req, res) => {
+    console.log('click')
+    let currentBot = bot.getBotInstance()
+    currentBot.webdriver.mouseClick(req.body.x, req.body.y)
+    res.send(true)
+})
+
+// Kill current bot
 app.get('/api/disconnect', async(req, res) => {
     await bot.killBot()
     res.send(true)

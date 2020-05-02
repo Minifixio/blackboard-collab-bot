@@ -81,8 +81,8 @@
             <button mat-raised-button class="bot-screenshot-button" color="accent" (click)="screenshot()">
               Voir ce que voit le BOT <mat-icon>add_a_photo</mat-icon>
             </button>
-  
-            <img mat-card-image id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot">  
+    
+            <img mat-card-image id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot" (click)="clickPage($event)">  
           </div>
      
         </mat-card>
@@ -96,5 +96,4 @@
       <mat-spinner></mat-spinner>
       Connexion en cours
     </div>
-
 </div>

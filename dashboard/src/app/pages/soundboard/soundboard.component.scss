@@ -19,6 +19,11 @@
 }
 
 .sound-card-span {
-    font-size: xxx-large;
+    font-size: xx-large;
     text-transform: uppercase;
+}
+
+.sound-card-span > .mat-icon {
+    font-size: xxx-large;
+    margin-right: 20px;
 }

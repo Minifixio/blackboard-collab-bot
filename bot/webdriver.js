@@ -87,6 +87,14 @@ module.exports.WebBrowser = class WebBrowser {
         await this.page.click(selector)
     }
 
+    async mouseClick(xRatio, yRatio) {
+        const viewport = await this.page.viewport()
+        let xPos = viewport.width * xRatio
+        let yPos = viewport.width * yRatio
+
+        await this.page.mouse.click(xPos, yPos)
+    }
+
     /**
      * Send a chat
      * @param {string} msg 

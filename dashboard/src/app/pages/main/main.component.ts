@@ -112,6 +112,17 @@ export class MainComponent implements OnInit {
     this.screenshotUrl = url + '?' + timeStamp;
   }
 
+  async clickPage(event) {
+    const boundingBox = document.getElementById('bot-screenshot-img').getBoundingClientRect();
+    const xPos = event.x - boundingBox.x;
+    const yPos = event.y - boundingBox.y;
+    const xRatio = xPos / boundingBox.width;
+    const yRatio = (yPos / boundingBox.height) * 0.75;
+    console.log('click');
+    await this.httpService.post('click', {x: xRatio, y: yRatio}).toPromise();
+    this.screenshot();
+  }
+
   onKeydown(event) {
     if (event.key === 'Enter') {
       this.startBot();

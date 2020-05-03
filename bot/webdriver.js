@@ -134,8 +134,6 @@ module.exports.WebBrowser = class WebBrowser {
             console.log('mic button disabled, playing sound')
             soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
         }
-
-        await this.page.select('#techcheck-audio-mic-select', 'Intel 82801AA-ICH, Intel 82801AA-ICH Direct hardware device without any conversions')
         
         await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
         console.log('audio setup')

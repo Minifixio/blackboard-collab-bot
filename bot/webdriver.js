@@ -20,6 +20,10 @@ module.exports.WebBrowser = class WebBrowser {
         // Start pupperteer
         try {
             this.browser = await puppeteer.launch({
+                defaultViewport: {
+                    width: 1280,
+                    height: 720
+                },
                 headless: true,
                 args: [ '--use-fake-ui-for-media-stream'],
                 ignoreDefaultArgs: ['--mute-audio']

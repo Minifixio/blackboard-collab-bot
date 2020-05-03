@@ -31,7 +31,6 @@ export class MainComponent implements OnInit {
   botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
 
   constructor(
-    private auth: AuthService,
     private httpService: HttpService,
     private socketService: SocketService,
     private toastService: ToastService
@@ -44,6 +43,7 @@ export class MainComponent implements OnInit {
       if (bot) {
         this.currentBot = bot;
         this.connected = this.currentBot.connected;
+        this.screenshot();
       }
     });
 
@@ -117,7 +117,7 @@ export class MainComponent implements OnInit {
     const xPos = event.x - boundingBox.x;
     const yPos = event.y - boundingBox.y;
     const xRatio = xPos / boundingBox.width;
-    const yRatio = (yPos / boundingBox.height) * 0.75;
+    const yRatio = (yPos / boundingBox.height) * 0.55;
     console.log('click');
     await this.httpService.post('click', {x: xRatio, y: yRatio}).toPromise();
     this.screenshot();

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class HttpService {
 
-  urlApi = 'http://localhost:3000';
+  urlApi = '/';
   uriApi = 'api';
   mainUrl = `${this.urlApi}/${this.uriApi}/`;
 

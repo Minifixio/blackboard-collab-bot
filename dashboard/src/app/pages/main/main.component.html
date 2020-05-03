@@ -32,10 +32,14 @@
 
     <mat-card *ngIf="currentBot && !loading" class="statut-bot-card">
       <mat-card-header>
+        <button id="disconnect-button" (click)="disconnectBot()" mat-raised-button color="primary">
+         <mat-icon>input</mat-icon> Déconnecter
+        </button>
         <mat-card-title>
           <div class="statut-title-div">
             Status du BOT <span>{{currentBot.name}}</span>
           </div>
+
         </mat-card-title>
       </mat-card-header>
 
@@ -81,14 +85,13 @@
             <button mat-raised-button class="bot-screenshot-button" color="accent" (click)="screenshot()">
               Voir ce que voit le BOT <mat-icon>add_a_photo</mat-icon>
             </button>
-    
+            <span>Clickez sur l'image pour contrôler la page</span>
             <img mat-card-image id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot" (click)="clickPage($event)">  
           </div>
      
         </mat-card>
 
 
-        <button id="disconnect-button" (click)="disconnectBot()" mat-raised-button color="primary">Déconnecter</button>
       </mat-card-content>
     </mat-card>
 

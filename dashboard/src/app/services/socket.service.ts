@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
 
-  urlApi = 'http://localhost:3000';
+  urlApi = '/';
   socket: any;
   alive = true;
 

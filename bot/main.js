@@ -28,10 +28,6 @@ app.all("/*", function(req, res, next){
     next();
 });
 
-app.get('/', (req, res) => {
-    res.redirect('/static/index.html')
-})
-
 // Starts a new BOT with name/url
 app.post('/api/start', (req, res) => {
     bot.initBot(req.body.name, '!')

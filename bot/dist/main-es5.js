@@ -2371,15 +2371,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, HttpService);
 
         this.http = http;
-        this.urlApi = '/';
-        this.uriApi = 'api';
-        this.mainUrl = "".concat(this.urlApi, "/").concat(this.uriApi, "/");
+        this.urlApi = '/api';
       }
 
       _createClass(HttpService, [{
         key: "get",
         value: function get(tag) {
-          return this.http.get(this.mainUrl + tag);
+          return this.http.get(this.urlApi + tag);
         }
       }, {
         key: "post",
@@ -2390,7 +2388,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               'Content-Type': 'application/json'
             })
           };
-          return this.http.post(this.mainUrl + tag, JSON.stringify(postParams), httpOptions);
+          return this.http.post(this.urlApi + tag, JSON.stringify(postParams), httpOptions);
         }
       }]);
 

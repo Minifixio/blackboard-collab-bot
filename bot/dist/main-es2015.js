@@ -1093,12 +1093,10 @@ __webpack_require__.r(__webpack_exports__);
 class HttpService {
     constructor(http) {
         this.http = http;
-        this.urlApi = '/';
-        this.uriApi = 'api';
-        this.mainUrl = `${this.urlApi}/${this.uriApi}/`;
+        this.urlApi = '/api';
     }
     get(tag) {
-        return this.http.get(this.mainUrl + tag);
+        return this.http.get(this.urlApi + tag);
     }
     post(tag, postParams) {
         const httpOptions = {
@@ -1107,7 +1105,7 @@ class HttpService {
                 'Content-Type': 'application/json'
             })
         };
-        return this.http.post(this.mainUrl + tag, JSON.stringify(postParams), httpOptions);
+        return this.http.post(this.urlApi + tag, JSON.stringify(postParams), httpOptions);
     }
 }
 HttpService.ɵfac = function HttpService_Factory(t) { return new (t || HttpService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };

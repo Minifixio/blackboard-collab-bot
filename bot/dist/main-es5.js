@@ -2371,7 +2371,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, HttpService);
 
         this.http = http;
-        this.urlApi = '/api';
+        this.urlApi = '/api/';
       }
 
       _createClass(HttpService, [{

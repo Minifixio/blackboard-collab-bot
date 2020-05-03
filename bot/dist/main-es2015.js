@@ -1093,7 +1093,7 @@ __webpack_require__.r(__webpack_exports__);
 class HttpService {
     constructor(http) {
         this.http = http;
-        this.urlApi = '/api';
+        this.urlApi = '/api/';
     }
     get(tag) {
         return this.http.get(this.urlApi + tag);

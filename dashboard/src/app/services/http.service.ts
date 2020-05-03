@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class HttpService {
 
-  urlApi = '/api';
+  urlApi = '/api/';
 
   constructor(
     private http: HttpClient

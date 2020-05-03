@@ -1833,7 +1833,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               while (1) {
                 switch (_context6.prev = _context6.next) {
                   case 0:
-                    url = 'http://localhost:3000/static/screenshot/screenshot.png';
+                    url = '/static/screenshot/screenshot.png';
                     timeStamp = new Date().getTime();
                     _context6.next = 4;
                     return this.httpService.get('screenshot').toPromise();

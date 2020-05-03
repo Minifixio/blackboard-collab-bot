@@ -106,7 +106,7 @@ export class MainComponent implements OnInit {
   }
 
   async screenshot() {
-    const url = 'http://localhost:3000/static/screenshot/screenshot.png';
+    const url = '/static/screenshot/screenshot.png';
     const timeStamp = new Date().getTime();
     await this.httpService.get('screenshot').toPromise();
     this.screenshotUrl = url + '?' + timeStamp;

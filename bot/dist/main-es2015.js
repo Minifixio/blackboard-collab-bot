@@ -845,7 +845,7 @@ class MainComponent {
     }
     screenshot() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const url = 'http://localhost:3000/static/screenshot/screenshot.png';
+            const url = '/static/screenshot/screenshot.png';
             const timeStamp = new Date().getTime();
             yield this.httpService.get('screenshot').toPromise();
             this.screenshotUrl = url + '?' + timeStamp;

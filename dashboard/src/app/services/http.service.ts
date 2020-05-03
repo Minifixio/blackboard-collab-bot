@@ -7,16 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class HttpService {
 
-  urlApi = '/';
-  uriApi = 'api';
-  mainUrl = `${this.urlApi}/${this.uriApi}/`;
+  urlApi = '/api';
 
   constructor(
     private http: HttpClient
   ) { }
 
   get(tag): Observable<any> {
-    return this.http.get(this.mainUrl + tag);
+    return this.http.get(this.urlApi + tag);
   }
 
   post(tag, postParams): Observable<any> {
@@ -26,6 +24,6 @@ export class HttpService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<any>(this.mainUrl + tag, JSON.stringify(postParams), httpOptions);
+    return this.http.post<any>(this.urlApi + tag, JSON.stringify(postParams), httpOptions);
   }
 }

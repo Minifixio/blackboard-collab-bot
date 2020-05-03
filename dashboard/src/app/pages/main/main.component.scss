@@ -152,3 +152,16 @@
     height: 100%;
     cursor: pointer;
 }
+
+.mic-dialog-list-item {
+    display: flex;
+    justify-content: center;
+}
+
+#mic-dialog-div {
+    text-align: center;
+}
+
+#mic-dialog-cancel-button {
+    margin-top: 20px;
+}

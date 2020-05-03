@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { CommandsListComponent } from 'src/app/components/commands-list/commands-list.component';
-import { AuthService } from 'src/app/services/auth.service';
 import { HttpService } from 'src/app/services/http.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { Observable } from 'rxjs';
 import { Bot } from 'src/app/models/Bot';
 import { ToastService } from 'src/app/services/toast.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -33,7 +34,8 @@ export class MainComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private socketService: SocketService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -106,7 +108,7 @@ export class MainComponent implements OnInit {
   }
 
   async screenshot() {
-    const url = '/static/screenshot/screenshot.png';
+    const url = environment.apiUrl === '/' ? '/static/screenshot/screenshot.png' : environment.apiUrl + '/static/screenshot/screenshot.png';
     const timeStamp = new Date().getTime();
     await this.httpService.get('screenshot').toPromise();
     this.screenshotUrl = url + '?' + timeStamp;
@@ -130,7 +132,7 @@ export class MainComponent implements OnInit {
   }
 
   socketCases(info) {
-    switch (info) {
+    switch (info.message) {
       case 'connecting':
         this.loading = false;
         this.connected = false;
@@ -170,6 +172,10 @@ export class MainComponent implements OnInit {
         this.connectionMessage = 'Le bot accède au micro';
         break;
 
+      case 'setup-mic-error':
+        this.openMicDialog(info.content);
+        break;
+
       case 'setup-mic-done':
         this.loading = false;
         this.connected = false;
@@ -177,5 +183,37 @@ export class MainComponent implements OnInit {
         this.connectionMessage = 'Micro mis en place';
         break;
     }
+  }
+
+  async openMicDialog(audioDevices) {
+    const dialogRef = this.dialog.open(DialogMicSelection, {
+      width: 'fit-content',
+      data: audioDevices
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      console.log('selected index', result);
+
+      if (result) {
+        await this.httpService.post('mic-option', {index: result}).toPromise();
+      }
+    });
+  }
+}
+
+
+@Component({
+  selector: 'dialog-mic-selection',
+  templateUrl: 'dialog-mic-selection.html',
+  styleUrls: ['./main.component.scss']
+})
+export class DialogMicSelection {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogMicSelection>,
+    @Inject(MAT_DIALOG_DATA) public data) {}
+
+  onNoClick(res): void {
+    this.dialogRef.close(res);
   }
 }

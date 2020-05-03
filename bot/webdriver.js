@@ -46,13 +46,13 @@ module.exports.WebBrowser = class WebBrowser {
      * @param {string} url 
      */
     async gotTo(url) {
-        this.socketEmit('bot-status', 'connecting')
+        this.socketEmit('bot-status', 'connecting', null)
 
         try {
             await this.page.goto(url, { waitUntil: 'load' });
         } catch(e) {
             console.log('wrong url')
-            this.socketEmit('bot-status', 'wrong-url')
+            this.socketEmit('bot-status', 'wrong-url', null)
         }
     }
 
@@ -69,7 +69,7 @@ module.exports.WebBrowser = class WebBrowser {
             await this.click('#launch-html-guest')
             return true
         } catch(e) {
-            this.socketEmit('bot-status', 'connection-error')
+            this.socketEmit('bot-status', 'connection-error', null)
             bot.killBot()
             return false
         }
@@ -121,7 +121,7 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async skipMicSetup() {
         console.log('setting up mic')
-        this.socketEmit('bot-status', 'setup-mic')
+        this.socketEmit('bot-status', 'setup-mic', null)
 
         await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
         console.log('mic selection panel is here')
@@ -135,17 +135,59 @@ module.exports.WebBrowser = class WebBrowser {
             soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
         }
         
-        await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
-        console.log('audio setup')
+        try {
+            await this.page.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
+            console.log('audio setup')
+
+            // Waiting for the video button, if an error is caught, then we are stuck on the audio setup page
+            await this.page.waitForSelector('#techcheck-video-ok-button', {timeout: 3000})
+
+            await this.click('#techcheck-video-ok-button')
+            console.log('video setup')
+
+            await this.click('#announcement-modal-page-wrap > button')
+            console.log('opening side panel')
+
+            await this.click('#side-panel-open')
+            console.log('side panel opened')
+
+            await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
+            console.log('mic set up')
+
+            this.socketEmit('bot-status', 'setup-mic-done', null)
+            return true
+
+        } catch(e) {
+            console.log('setup mic error')
+            let micOptions = await this.page.evaluate(() => {
+                let res = []
+                let select = document.querySelector("#techcheck-audio-mic-select").options
+                for (let i=0; i<select.length; i++) {
+                    res.push({
+                        index: select[i].index,
+                        value: select[i].textContent
+                    })
+                }
+                return res
+            })
+
+            this.socketEmit('bot-status', 'setup-mic-error', micOptions)
+            return false
+        }
+    }
+
+    async setupMic(optionIndex) {
+        await this.page.evaluate((optionIndex) => {
+            document.querySelector("#techcheck-audio-mic-select").options[optionIndex].selected = true
+        }, optionIndex);
+        soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
+
+        await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button', {timeout: 3000})
         await this.click('#techcheck-video-ok-button')
-        console.log('video setup')
-        await this.click('#announcement-modal-page-wrap > button')
-        console.log('opening side panel')
         await this.click('#side-panel-open')
-        console.log('side panel opened')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
-        console.log('mic set up')
-        this.socketEmit('bot-status', 'setup-mic-done')
+        this.socketEmit('bot-status', 'setup-mic-done', null)
+        this.listenForChat()
     }
 
     /**
@@ -153,7 +195,7 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async skipTestPage() {
         console.log('skipping test page')
-        this.socketEmit('bot-status', 'skipping-test')
+        this.socketEmit('bot-status', 'skipping-test', null)
 
         await this.page.reload()
         await this.page.waitForSelector('#field0')
@@ -208,8 +250,11 @@ module.exports.WebBrowser = class WebBrowser {
         })
         .catch(async() => {
             await this.skipTestPage()
-            await this.skipMicSetup()
-            this.listenForChat()
+            let micSetup = await this.skipMicSetup()
+
+            if (micSetup) {
+                this.listenForChat()
+            }
         })
 
     }
@@ -219,7 +264,7 @@ module.exports.WebBrowser = class WebBrowser {
      */
     async listenForChat() {
         console.log('start listening')
-        this.socketEmit('bot-status', 'live')
+        this.socketEmit('bot-status', 'live', null)
 
         await this.page.exposeFunction('callbackChat', newChat);
 

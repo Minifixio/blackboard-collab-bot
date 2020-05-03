@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './components/menu/menu.component';
-import { MainComponent } from './pages/main/main.component';
+import { MainComponent, DialogMicSelection } from './pages/main/main.component';
 import { FormsModule } from '@angular/forms';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -26,6 +26,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     CommandsListComponent,
     DrawingsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    DialogMicSelection
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatGridListModule,
     MatDividerModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    DialogMicSelection,
+    MainComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
 
-  urlApi = '/';
+  apiUrl = environment.apiUrl;
   socket: any;
   alive = true;
 
   constructor() { }
 
   setup() {
-    this.socket = io(this.urlApi);
+    this.socket = io(this.apiUrl);
     this.alive = true;
     this.socket.on('connect_error', () => {
       this.alive = false;

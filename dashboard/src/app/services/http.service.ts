@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  urlApi = '/api/';
+  apiUrl = `${environment.apiUrl}/api/`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   get(tag): Observable<any> {
-    return this.http.get(this.urlApi + tag);
+    return this.http.get(this.apiUrl + tag);
   }
 
   post(tag, postParams): Observable<any> {
@@ -24,6 +25,6 @@ export class HttpService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<any>(this.urlApi + tag, JSON.stringify(postParams), httpOptions);
+    return this.http.post<any>(this.apiUrl + tag, JSON.stringify(postParams), httpOptions);
   }
 }

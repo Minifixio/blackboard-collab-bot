@@ -37,6 +37,14 @@ app.post('/api/start', (req, res) => {
     res.send(started)
 })
 
+// Let the user select the mic input
+app.post('/api/mic-option', async(req, res) => {
+    let currentBot = bot.getBotInstance()
+
+    await currentBot.webdriver.setupMic(req.body.index)
+    res.send(true)
+})
+
 app.post('/api/click', (req, res) => {
     let currentBot = bot.getBotInstance()
     currentBot.webdriver.mouseClick(req.body.x, req.body.y)
@@ -130,8 +138,11 @@ io.on("connection", socket => {
 
 });
 
-function socketEmit(tag, content) {
-    io.emit(tag, content)
+function socketEmit(tag, message, content) {
+    io.emit(tag, {
+        message: message,
+        content: content
+    })
 }
 
 module.exports.socketEmit = socketEmit

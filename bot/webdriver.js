@@ -66,7 +66,9 @@ module.exports.WebBrowser = class WebBrowser {
             await this.page.waitForSelector('#guest-name', {tiemout: 10000})
             await this.page.focus('#guest-name')
             await this.page.type('#guest-name', this.botName)
+            await this.page.waitFor(1000)
             await this.click('#launch-html-guest')
+            await this.skipMicSetup()
             return true
         } catch(e) {
             this.socketEmit('bot-status', 'connection-error', null)
@@ -79,6 +81,8 @@ module.exports.WebBrowser = class WebBrowser {
      * Stop the browser
      */
     async kill() {
+        console.log('killing webdriver')
+        await this.page.close()
         await this.browser.close()
     }
 
@@ -104,9 +108,31 @@ module.exports.WebBrowser = class WebBrowser {
      * @param {string} msg 
      */
     async sendChat(msg) {
-        await this.page.focus('#message-input')
-        await this.page.type('#message-input', msg)
-        await this.page.keyboard.press('Enter')
+
+        let chatAvailable = await this.isChatAvailable()
+
+        if(!chatAvailable) {
+            this.socketEmit('bot-status', 'chat-not-available', null)
+            return false
+        } else {
+            await this.page.focus('#message-input')
+            await this.page.type('#message-input', msg)
+            await this.page.keyboard.press('Enter')
+            return true
+        }
+    }
+
+    /**
+     * Chack if chat is available
+     */
+    async isChatAvailable() {
+        try {
+            await this.page.focus('#message-input')
+            return true
+        } catch(e) {
+            console.log('chat not available')
+            return false
+        }
     }
     
     /**
@@ -124,6 +150,7 @@ module.exports.WebBrowser = class WebBrowser {
         this.socketEmit('bot-status', 'setup-mic', null)
 
         await this.page.waitForSelector('#techcheck-audio-mic-select', {timeout: 10000000})
+        this.socketEmit('bot-status', 'mic-selection', null)
         console.log('mic selection panel is here')
 
         var micButtonDisabled = await this.page.evaluate(() => {
@@ -137,12 +164,14 @@ module.exports.WebBrowser = class WebBrowser {
         
         try {
             await this.page.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
+            this.socketEmit('bot-status', 'mic-selection-done', null)
             console.log('audio setup')
 
             // Waiting for the video button, if an error is caught, then we are stuck on the audio setup page
             await this.page.waitForSelector('#techcheck-video-ok-button', {timeout: 3000})
 
             await this.click('#techcheck-video-ok-button')
+            this.socketEmit('bot-status', 'video-setup-done', null)
             console.log('video setup')
 
             await this.click('#announcement-modal-page-wrap > button')
@@ -184,6 +213,7 @@ module.exports.WebBrowser = class WebBrowser {
 
         await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button', {timeout: 3000})
         await this.click('#techcheck-video-ok-button')
+        await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')
         this.socketEmit('bot-status', 'setup-mic-done', null)

@@ -1,5 +1,5 @@
 <mat-selection-list>
-    <mat-list-option checkboxPosition="before" *ngFor="let command of commands" [selected]="command.activated">
+    <mat-list-option checkboxPosition="before" *ngFor="let command of commands" [selected]="command.activated" (click)="command.activated = !command.activated">
             <span><label class="command-checkbox-label">!{{command.name}}</label> : {{command.description}}</span>
     </mat-list-option>
 </mat-selection-list>

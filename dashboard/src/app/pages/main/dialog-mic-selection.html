@@ -1,8 +1,8 @@
 <div id="mic-dialog-div">
-    <h1 mat-dialog-title>Selectionner un périphérique audio</h1>
+    <h1 mat-dialog-title>Veuillez selectionner le périphérique audio correspondant à votre serveur audio virtuel</h1>
     <mat-list role="list">
         <mat-list-item class="mic-dialog-list-item" role="listitem" *ngFor="let device of data">
-            <button mat-stroked-button color="accent" (click)="onNoClick(device.index)">{{device.value}}</button>
+            <button mat-stroked-button color="accent" (click)="onNoClick(device.index)" matDialogClose>{{device.value}}</button>
         </mat-list-item>
     </mat-list>
     <button id="mic-dialog-cancel-button" mat-raised-button color="accent" (click)="onNoClick(null)">OK</button>

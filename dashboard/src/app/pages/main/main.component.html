@@ -82,16 +82,19 @@
 
         <mat-card class="bot-screenshot-card">
           <div class="bot-screenshot-div">
+ 
             <button mat-raised-button class="bot-screenshot-button" color="accent" (click)="screenshot()">
-              Voir ce que voit le BOT <mat-icon>add_a_photo</mat-icon>
+              Actualiser la vision <mat-icon>add_a_photo</mat-icon>
             </button>
-            <span>Clickez sur l'image pour contrôler la page</span>
-            <img mat-card-image id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot" (click)="clickPage($event)">  
+            <span>Cliquez sur l'image pour contrôler la page</span>
+            <img mat-card-image *ngIf="screenshotUrl" id="bot-screenshot-img" [src]="screenshotUrl" alt="Screenshot of the bot" (click)="clickPage($event)">  
+
+            <div *ngIf="!screenshotUrl">
+              <mat-spinner></mat-spinner>
+            </div>
           </div>
      
         </mat-card>
-
-
       </mat-card-content>
     </mat-card>
 

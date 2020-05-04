@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Drawing } from 'src/app/models/Drawing';
 import { HttpService } from 'src/app/services/http.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-drawings',
@@ -34,6 +35,6 @@ export class DrawingsComponent implements OnInit {
   }
 
   getUrl(name) {
-    return `http://localhost:3000/static/drawings/svg/${name}.svg`
+    return environment.apiUrl + `/static/drawings/svg/${name}.svg`;
   }
 }

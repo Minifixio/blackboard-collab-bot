@@ -82,7 +82,7 @@ export class MainComponent implements OnInit {
   }
 
   async disconnectBot() {
-    await this.httpService.get('disconnect');
+    await this.httpService.get('disconnect').toPromise().then(res => console.log(res));
     this.currentBot = null;
   }
 
@@ -93,6 +93,8 @@ export class MainComponent implements OnInit {
 
     if (res) {
       this.toastService.showToast('Le message a bien été envoyé !', 5000);
+    } else {
+      this.toastService.showToast('Le BOT ne peut pas accéder au chat', 6000);
     }
   }
 
@@ -173,7 +175,28 @@ export class MainComponent implements OnInit {
         break;
 
       case 'setup-mic-error':
+        this.screenshot();
         this.openMicDialog(info.content);
+        break;
+
+      case 'mic-selection':
+        this.connectionMessage = 'Le bot doit choisir une source micro';
+        this.screenshot();
+        break;
+
+      case 'video-setup-done':
+        this.connectionMessage = 'Le bot passe l\'accès à la caméra';
+        this.screenshot();
+        break;
+
+      case 'mic-selection-done':
+        this.connectionMessage = 'Le bot a choisi la source micro';
+        this.screenshot();
+        break;
+
+      case 'chat-not-available':
+        this.toastService.showToast('Le BOT ne peut pas accéder au chat', 6000);
+        this.screenshot();
         break;
 
       case 'setup-mic-done':
@@ -195,8 +218,10 @@ export class MainComponent implements OnInit {
       console.log('selected index', result);
 
       if (result) {
+        this.dialog.closeAll();
         await this.httpService.post('mic-option', {index: result}).toPromise();
       }
+
     });
   }
 }

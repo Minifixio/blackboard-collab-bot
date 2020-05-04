@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path');
 var bot = require('../bot.js')
+var main = require('../main.js')
 const Command = require('../models/Command.js').Command
 let imgPath = '../files/drawings/path/'
 
@@ -25,6 +26,7 @@ module.exports.imgs = imgs
 async function call(content) {
     
     let currentBot = bot.getBotInstance()
+
     let desiredImg = imgs.find(img => img.name == content.message)
 
     if (!desiredImg) {
@@ -57,7 +59,10 @@ async function call(content) {
             }
 
         } else {
-            await currentBot.webdriver.sendChat('Attends un peu que je finisse mon dessin !')
+            // If there is a username, it means the message comes from the chat and not from the dashboard
+            if(content.username) {
+                await currentBot.webdriver.sendChat('Attends un peu que je finisse mon dessin !')
+            }
         }
     }
 
@@ -70,14 +75,7 @@ class Drawer {
         var page = currentBot.webdriver.page
 
         // If an error is caught, it means the pencil icon is not present and consequently, drawing is not possible
-        await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
-
-        var drawingCanvas = await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {tiemout: 3000})
-
-        try {
-        } catch(e) {
-            return e
-        }
+        var drawingCanvas = await page.waitForSelector('#whiteboard_container > div > div.canvas_container.paper', {timeout: 1000})
     
         let boundingBox = await drawingCanvas.boundingBox()
         var width = boundingBox.width

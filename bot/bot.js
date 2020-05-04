@@ -38,13 +38,14 @@ class Bot {
         }
 
         // If the browser already exists
-        if (this.webdriver.browser) {
+        if (this.webdriver) {
             await this.webdriver.gotTo(url)
         } else {
             this.webdriver = new webdriver.WebBrowser(url, this.name, this.tag, this)
 
             try {
                 await this.webdriver.init()
+                await this.webdriver.connectToClass()
                 this.connected = true
                 return true
             } catch(e) {
@@ -65,6 +66,7 @@ module.exports.connectBot = async function connectBot(url) {
 }
 
 module.exports.killBot = async function killBot() {
+    console.log('killing bot')
     await currentBot.webdriver.kill()
     currentBot = null;
 }

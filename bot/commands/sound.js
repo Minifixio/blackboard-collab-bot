@@ -1,4 +1,5 @@
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 var player = require('play-sound')(opts = {})
 var bot = require('../bot.js')
 
@@ -10,17 +11,24 @@ const Command = require('../models/Command.js').Command
 var SoundCmd = new Command('son', call, description, false)
 module.exports.SoundCmd = SoundCmd
 
-let sounds = [
-    {name: 'bruh', path: `${soundsPath}bruh.mp3`},
-    {name: 'pet1', path: `${soundsPath}fart1.mp3`},
-    {name: 'pet2', path: `${soundsPath}fart2.mp3`},
-    {name: 'yay', path: `${soundsPath}yay.mp3`},
-    {name: 'yeah', path: `${soundsPath}yeah.mp3`},
-    {name: 'snoopdogg', path: `${soundsPath}snoopdogg.mp3`},
-    {name: 'illuminati', path: `${soundsPath}illuminati.mp3`}
-]
-
+var sounds = []
 module.exports.sounds = sounds
+
+
+function initSounds() {
+    let soundFiles = fs.readdirSync(path.resolve(__dirname, soundsPath)).filter(file => { 
+        if(file.includes('.mp3') || file.includes('.wav')) {
+            return file
+        }
+    })
+
+    soundFiles.forEach(file => sounds.push({
+        name: file.split('.')[0],
+        path: `${soundsPath}${file}`
+    }))
+}
+
+initSounds()
 
 async function call(content) {
 
@@ -55,5 +63,5 @@ async function call(content) {
 }
 
 module.exports.playConnextionSound = function playConnextionSound() {
-    player.play(path.resolve(__dirname, '../files/sounds/beep.mp3'))
+    player.play(path.resolve(__dirname, '../files/others/beep_connection.mp3'))
 }

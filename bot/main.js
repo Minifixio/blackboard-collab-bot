@@ -53,6 +53,7 @@ app.post('/api/click', (req, res) => {
 
 // Kill current bot
 app.get('/api/disconnect', async(req, res) => {
+    console.log('kill')
     await bot.killBot()
     res.send(true)
 })
@@ -81,7 +82,9 @@ app.get('/api/drawings', (req, res) => {
 app.get('/api/screenshot', async(req, res) => {
     let currentBot = bot.getBotInstance()
 
-    await currentBot.webdriver.screenshot()
+    if (currentBot) {
+        await currentBot.webdriver.screenshot()
+    }
 
     res.send(true)
 })
@@ -112,10 +115,16 @@ app.post('/api/text', async(req, res) => {
     let currentBot = bot.getBotInstance()
 
     if (currentBot) {
-        await currentBot.webdriver.sendChat(req.body.message)
-        res.json(true)
+        let msgSent = await currentBot.webdriver.sendChat(req.body.message)
+
+        if (msgSent) {
+            res.send(true)
+        } else {
+            res.send(false)
+        }
+
     } else {
-        res.json(false)
+        res.send(false)
     }
 })
 

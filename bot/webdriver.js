@@ -217,7 +217,14 @@ module.exports.WebBrowser = class WebBrowser {
             soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
     
             await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
-            await this.click('#techcheck-video-ok-button')
+
+            try {
+                await this.page.waitForSelector('#techcheck-video-ok-button', {timeout: 2000})
+                await this.click('#techcheck-video-ok-button')
+            } catch(e) {
+                await this.click('#techcheck-modal > button')
+                await this.page.waitFor(1000)
+            }
         }
  
         await this.click('#announcement-modal-page-wrap > button')

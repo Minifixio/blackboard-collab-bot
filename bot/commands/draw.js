@@ -7,22 +7,11 @@ var svgConvertor = require('./svg_to_coords/svg_convertor')
 const Command = require('../models/Command.js').Command
 let imgPath = '../files/drawings'
 
-let description = 'dessiner sur le tableau (faire !dessine pour voir les desisns disponibles)'
+let description = 'dessiner sur le tableau (faire !dessine pour voir les dessins disponibles)'
 let drawer = null
 
 var DrawCmd = new Command('dessine', call, description, false)
 module.exports.DrawCmd = DrawCmd
-
-/**var imgs = [
-    {name: 'thug', path: `${imgPath}thug.json`},
-    {name: 'loutre', path: `${imgPath}loutre.json`},
-    {name: 'trollface', path: `${imgPath}trollface.json`},
-    {name: 'superzizi', path: `${imgPath}superzizi.json`},
-    {name: 'zizi', path: `${imgPath}zizi.json`},
-    {name: 'lolface', path: `${imgPath}lolface.json`},
-    {name: 'poop', path: `${imgPath}poop.json`},
-    {name: 'test', path: `${imgPath}test.json`}
-]**/
 
 var imgs = []
 

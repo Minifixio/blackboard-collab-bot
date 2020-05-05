@@ -2,8 +2,10 @@ const fs = require('fs')
 const path = require('path');
 var bot = require('../bot.js')
 var main = require('../main.js')
+
+var svgConvertor = require('./svg_to_coords/svg_convertor')
 const Command = require('../models/Command.js').Command
-let imgPath = '../files/drawings/path/'
+let imgPath = '../files/drawings'
 
 let description = 'dessiner sur le tableau (faire !dessine pour voir les desisns disponibles)'
 let drawer = null
@@ -11,17 +13,52 @@ let drawer = null
 var DrawCmd = new Command('dessine', call, description, false)
 module.exports.DrawCmd = DrawCmd
 
-var imgs = [
+/**var imgs = [
     {name: 'thug', path: `${imgPath}thug.json`},
     {name: 'loutre', path: `${imgPath}loutre.json`},
     {name: 'trollface', path: `${imgPath}trollface.json`},
     {name: 'superzizi', path: `${imgPath}superzizi.json`},
     {name: 'zizi', path: `${imgPath}zizi.json`},
     {name: 'lolface', path: `${imgPath}lolface.json`},
-    {name: 'poop', path: `${imgPath}poop.json`}
-]
+    {name: 'poop', path: `${imgPath}poop.json`},
+    {name: 'test', path: `${imgPath}test.json`}
+]**/
+
+var imgs = []
 
 module.exports.imgs = imgs
+
+/**
+ * The function scan the /files/drawings/svg folder to detect any new files.
+ * SVG files are then automatically converted to an array of absolute coordinates and put in a .json file in /files/drawings/path
+ */
+function registerImgs() {
+    let jsonFiles = fs.readdirSync(path.resolve(__dirname, `${imgPath}/path`)).filter(file => { 
+        if(file.includes('.json')) {
+            return file
+        }
+    }).map(fileName => fileName.split('.json')[0])
+
+    let svgFiles = fs.readdirSync(path.resolve(__dirname, `${imgPath}/svg`)).filter(file => { 
+        if(file.includes('.svg')) {
+            return file
+        }
+    }).map(fileName => fileName.split('.svg')[0])
+
+    svgFiles.forEach(file => {
+        if (jsonFiles.indexOf(file) == -1) {
+            console.log('new file detected in the drawings folder :', file)
+            svgConvertor.convert(file)
+        }
+
+        imgs.push({
+            name: file, 
+            path: `${imgPath}/path/${file}.json`
+        })
+    })
+}
+
+registerImgs()
 
 async function call(content) {
     

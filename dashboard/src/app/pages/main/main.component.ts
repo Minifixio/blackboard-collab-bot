@@ -217,9 +217,9 @@ export class MainComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       console.log('selected index', result);
 
-      if (result) {
+      if (result != null) {
         this.dialog.closeAll();
-        await this.httpService.post('mic-option', {index: result}).toPromise();
+        await this.httpService.post('mic-option', {index: result}).toPromise().then(res => console.log(res));
       }
 
     });

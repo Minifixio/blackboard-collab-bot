@@ -207,6 +207,7 @@ module.exports.WebBrowser = class WebBrowser {
 
     async setupMic(optionIndex) {
 
+        console.log('mic option index : ' + optionIndex)
         if (optionIndex == 'no' ) {
             await this.click('#techcheck-modal > button')
         } else {

@@ -40,7 +40,7 @@ app.post('/api/start', (req, res) => {
 // Let the user select the mic input
 app.post('/api/mic-option', async(req, res) => {
     let currentBot = bot.getBotInstance()
-
+    console.log('selected mic index :', req.body.index)
     await currentBot.webdriver.setupMic(req.body.index)
     res.send(true)
 })

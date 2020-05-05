@@ -100,7 +100,10 @@ Adding **your own sounds** :
 
 
 Adding **your own drawings** : 
-* Drawings needs to be referenced in the ```bot/commands/Draw.js``` file and ```.json``` files of the coordinates need to be added in the ```/files/drawings/path``` folder. You can use tools such as [Coordinator](https://spotify.github.io/coordinator/) to convert ```.svg``` files of your own to coordinates
+* You can add any custom drawings since they are ```.svg``` files. You just have to drop them in the ```bot/files/drawings/svg``` folder and they will be automatically referenced at the launch of the BOT.
+
+*If you have issues when adding your own drawings :* :
+* Try using tools such as [Coordinator](https://spotify.github.io/coordinator/) to convert ```.svg``` files of your own to coordinates and add the ```.svg``` file in the ```bot/files/drawings/svg``` folder and the ```.json``` file from Coordinator in the ```bot/files/drawings/path``` folder
 
 
 <br/>

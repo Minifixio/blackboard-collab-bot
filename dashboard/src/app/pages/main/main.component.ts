@@ -218,8 +218,8 @@ export class MainComponent implements OnInit {
       console.log('selected index', result);
 
       if (result != null) {
+        this.httpService.post('mic-option', {index: result}).toPromise().then(res => console.log(res));
         this.dialog.closeAll();
-        await this.httpService.post('mic-option', {index: result}).toPromise().then(res => console.log(res));
       }
 
     });

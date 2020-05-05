@@ -206,13 +206,19 @@ module.exports.WebBrowser = class WebBrowser {
     }
 
     async setupMic(optionIndex) {
-        await this.page.evaluate((optionIndex) => {
-            document.querySelector("#techcheck-audio-mic-select").options[optionIndex].selected = true
-        }, optionIndex);
-        soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
 
-        await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button', {timeout: 3000})
-        await this.click('#techcheck-video-ok-button')
+        if (optionIndex == 'no' ) {
+            await this.click('#techcheck-modal > button')
+        } else {
+            await this.page.evaluate((optionIndex) => {
+                document.querySelector("#techcheck-audio-mic-select").options[optionIndex].selected = true
+            }, optionIndex);
+            soundCommand.playConnextionSound() // The bot plays a sound to make sure the mic is recognized before logging in
+    
+            await this.click('#dialog-description-audio > div.techcheck-controls.equal-buttons.buttons-2-md > button')
+            await this.click('#techcheck-video-ok-button')
+        }
+ 
         await this.click('#announcement-modal-page-wrap > button')
         await this.click('#side-panel-open')
         await this.click('#chat-channel-scroll-content > ul > li > ul > li > bb-channel-list-item > button')

@@ -67,7 +67,6 @@ function writeJSON(data, name) {
 module.exports.convert = function convert(name) {
 
     let svg = fs.readFileSync(path.resolve(__dirname, `${dirPath}/svg/${name}.svg`), 'utf8')
-    console.log(svg)
 
     let svgPaths = pathologize(svg)
     let data = getPointsArray(svgPaths.split('\n').slice(1, -1), 500)

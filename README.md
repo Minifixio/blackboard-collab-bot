@@ -1,5 +1,8 @@
 # Blackboard Collaborate BOT
 
+*Voir la [version française](https://github.com/Minifixio/blackboard-collab-bot-js/blob/master/README.fr.md) de la documentation*
+
+
 ## Background
 
 During the lockdown, some schools, such as mine, decided to use [Blackboard Collaborate](https://www.blackboard.com/teaching-learning/collaboration-web-conferencing/blackboard-collaborate) to provide online classes.
@@ -56,6 +59,16 @@ Then run **`node main.js`**, open your browser and go to **```http://localhost:3
 You should see the dashboard. You can then start the BOT using it.
 If the node process dies, the dashboard also quits.
 
+**Important notes for MacOS et Windows**
+
+When you start the BOT for the first time, you may have small bugs which will be fixed at the second use :  
+
+* On **MacOS**, if you start the BOT using the Terminal app, it may asks you the permission to access to the audio and video control. It is just in order to let Chromium play sound via NodeJS. Once you allowed the permission, restart the BOT.
+
+* On **Windows**, in the same way, the Bash app may requires the audio permission. Once again, when you allowed the permission, restart the BOT.
+
+* During the **audio setup** : if the BOT is stuck on the input audio device selection when connecting to the classroom, you can click on the "Skip audio setup" or "Everything is working well" button on the BOT control image in the dashboard.
+
 
 <br/>
 
@@ -92,7 +105,7 @@ Make sure to report any other issues.
 # Customizing :
 
 Adding **your own commands** : 
-* See how commands are built in the ```bot/commands```folder
+* See how commands are built in the ```bot/commands``` folder
 
 
 Adding **your own sounds** : 

@@ -161,7 +161,7 @@ class Drawer {
                 await mouse.down()
             }
     
-            await mouse.move(points[i][0], points[i][1], {step: 100})
+            await mouse.move(points[i][0], points[i][1], {step: 150})
     
         }
     

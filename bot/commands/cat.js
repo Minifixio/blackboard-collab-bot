@@ -12,7 +12,7 @@ async function call(content) {
     let currentBot = bot.getBotInstance()
 
     try {
-        var res = await httpManager.get(catUrl)
+        var res = JSON.parse(await httpManager.get(catUrl))
         await currentBot.webdriver.sendChat('Voici une image de chat ' + res[0].url)
     } catch(e) {
         await currentBot.webdriver.sendChat('Je galère à trouver des chats la')

@@ -1,6 +1,6 @@
 var webdriver = require('./webdriver.js')
 var command_manager = require('./command_manager.js')
-const testing = true;
+const testing = false;
 
 var currentBot
 

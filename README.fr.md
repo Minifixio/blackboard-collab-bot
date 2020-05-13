@@ -1,5 +1,7 @@
 # Blackboard Collaborate BOT (français)
 
+*Voir la [vidéo de présentation et tutoriel d'utilisation](https://www.youtube.com/watch?v=9wo8dPhXbG8)*
+
 ## L'idée
 
 Pendant le confinement, afin d'assurer la continuité pédagogique, mon établissement a décidé d'utiliser [Blackboard Collaborate](https://www.blackboard.com/teaching-learning/collaboration-web-conferencing/blackboard-collaborate) pour des classes virtuelles.
@@ -13,11 +15,8 @@ Ainsi, j'ai décidé d'utiliser [Pupperteer](https://github.com/puppeteer/puppet
 <br/>
 
 *La page de Dashboard depuis laquelle vous pouvez envoyer des messages à la classe & un exemple de dessin sur le tableau de la classe :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
-  <img src=".screenshots/bot_connected.png" style="margin:5px" width="50%" />
-  <img src=".screenshots/loutre_drawing.png" style="margin:5px" width="50%" /> 
-</div>
-
+![The Dashboard](.screenshots/bot_connected.png)
+![A drawing](.screenshots/loutre_drawing.png)
 
 <br/>
 
@@ -42,7 +41,7 @@ Ainsi quand le BOT jouera un son dans la sortie audio de ce serveur audio virtue
 
 Voici un *schéma explicatif* :
 
-![Schéma](https://github.com/Minifixio/blackboard-collab-bot-js/blob/master/bot/models/sound_workflow.png)
+![Schéma](.screenshots/sound_workflow.png)
 
 <br/><br/>
 Pour également avoir au son diffusé sur le serveur audio virtuel et le rediriger également vers votre casque audio par exemple, vous pouvez utiliser des périphériques à sortie multiples.
@@ -83,11 +82,8 @@ Lors de la première utilisation du BOT, vous pouvez être confrontés à diffé
 <br/>
 
 *Le BOT vous demande de choisir l'entrée audio qu'il va utiliser :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
-  <img src=".screenshots/bot_connecting.png" style="margin:5px" width="50%" /> 
-    <img src=".screenshots/bot_mic_selection.png" style="margin:5px" width="50%" />
-</div>
-
+![The BOT connecting](.screenshots/bot_connected.png)
+![A mic selection](.screenshots/loutre_drawing.png)
 
 <br/>
 
@@ -128,18 +124,18 @@ N'hésitez pas à faire des remarques, proposer des idées, etc... ! :)
 # Screenshots :
 
 *La Soundboard et la page dessins :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+<div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
   <img src=".screenshots/soundboard.png" style="margin:5px" width="50%" />
   <img src=".screenshots/drawings.png" style="margin:5px" width="50%" /> 
 </div>
 
 *La page de lancement et de selection des commandes :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+<div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
   <img src=".screenshots/bot_setup_page.png" style="margin:5px" width="100%" />
 </div>
 
 *D'autres exemples de dessins :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+<div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
   <img src=".screenshots/thug_drawing.png" style="margin:5px" width="50%" />
   <img src=".screenshots/lol_face_drawing.png" style="margin:5px" width="50%" /> 
 </div>

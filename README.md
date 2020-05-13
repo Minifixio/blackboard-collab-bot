@@ -14,11 +14,8 @@ I first used Python to build a light version of this BOT and quickly switched ov
 <br/>
 
 *The main dashboard page where you can send messages to the class and an example of drawing on the class board :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
-  <img src=".screenshots/bot_connected.png" style="margin:5px" width="50%" />
-  <img src=".screenshots/loutre_drawing.png" style="margin:5px" width="50%" /> 
-</div>
-
+![The Dashboard](.screenshots/bot_connected.png)
+![A drawing](.screenshots/loutre_drawing.png)
 
 <br/>
 
@@ -81,10 +78,8 @@ When you start the BOT for the first time, you may have small bugs which will be
 <br/>
 
 *The BOT let you select the audio input that it will use :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
-  <img src=".screenshots/bot_connecting.png" style="margin:5px" width="50%" /> 
-    <img src=".screenshots/bot_mic_selection.png" style="margin:5px" width="50%" />
-</div>
+![The BOT connecting](.screenshots/bot_connected.png)
+![A mic selection](.screenshots/loutre_drawing.png)
 
 
 <br/>

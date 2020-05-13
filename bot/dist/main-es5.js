@@ -733,7 +733,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selectors: [["app-menu"]],
       decls: 20,
       vars: 3,
-      consts: [["color", "primary"], ["mat-icon-button", "", 3, "click"], ["autosize", "", 1, "main-container"], ["fixedInViewport", "false", "mode", "side", 1, "main-sidenav", 3, "opened"], ["role", "list"], ["role", "listitem"], ["routerLink", "/main", "mat-button", "", 1, "sidenav-button"], ["routerLink", "/soundboard", "mat-button", "", 1, "sidenav-button"], ["routerLink", "/drawings", "mat-button", "", 1, "sidenav-button"], [4, "ngIf"], ["id", "error-socket-div", 4, "ngIf"], ["id", "error-socket-div"]],
+      consts: [["color", "primary"], ["mat-icon-button", "", 3, "click"], ["autosize", "", 1, "main-container"], ["fixedInViewport", "false", "mode", "side", 1, "main-sidenav", 3, "opened"], ["role", "list"], ["role", "listitem"], ["routerLink", "/dashboard", "mat-button", "", 1, "sidenav-button"], ["routerLink", "/soundboard", "mat-button", "", 1, "sidenav-button"], ["routerLink", "/drawings", "mat-button", "", 1, "sidenav-button"], [4, "ngIf"], ["id", "error-socket-div", 4, "ngIf"], ["id", "error-socket-div"]],
       template: function MenuComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-toolbar", 0);

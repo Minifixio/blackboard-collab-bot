@@ -35,7 +35,7 @@ module.exports.WebBrowser = class WebBrowser {
 
         this.page = await this.browser.newPage()
         // Unsing specific agent to make sure the website recognize the browser even in headless mode
-        await this.page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')
+        await this.page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.0 Safari/537.36')
 
         await this.gotTo(this.url)
         // TODO : add conneciton for prod

@@ -12,6 +12,15 @@ Ainsi, j'ai décidé d'utiliser [Pupperteer](https://github.com/puppeteer/puppet
 
 <br/>
 
+*La page de Dashboard depuis laquelle vous pouvez envoyer des messages à la classe & un exemple de dessin sur le tableau de la classe :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/bot_connected.png" style="margin:5px" width="50%" />
+  <img src=".screenshots/loutre_drawing.png" style="margin:5px" width="50%" /> 
+</div>
+
+
+<br/>
+
 # Utilisation
 
 ## Pré-requis :
@@ -71,7 +80,16 @@ Lors de la première utilisation du BOT, vous pouvez être confrontés à diffé
 * Lorsque le **BOT doit choisir sa configuration audio** : si le BOT reste coincé sur la page de sélection d'un périphérique d'entrée audio lors de la connexion à la classe virtuelle, vous pouvez forcer son passage à la page suivant en cliquant sur le bouton "Skip audio setup" ou "Everything is working well" sur l'iamge de contrôle du BOT de la dashboard.  
 
 
-<br/><br/>
+<br/>
+
+*Le BOT vous demande de choisir l'entrée audio qu'il va utiliser :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/bot_connecting.png" style="margin:5px" width="50%" /> 
+    <img src=".screenshots/bot_mic_selection.png" style="margin:5px" width="50%" />
+</div>
+
+
+<br/>
 
 # Problèmes courants :
 
@@ -105,3 +123,23 @@ Ajouter **vos propres fichiers fichiers de dessin** :
 
 N'hésitez pas à faire des remarques, proposer des idées, etc... ! :)
 
+<br/>
+
+# Screenshots :
+
+*La Soundboard et la page dessins :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/soundboard.png" style="margin:5px" width="50%" />
+  <img src=".screenshots/drawings.png" style="margin:5px" width="50%" /> 
+</div>
+
+*La page de lancement et de selection des commandes :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/bot_setup_page.png" style="margin:5px" width="100%" />
+</div>
+
+*D'autres exemples de dessins :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/thug_drawing.png" style="margin:5px" width="50%" />
+  <img src=".screenshots/lol_face_drawing.png" style="margin:5px" width="50%" /> 
+</div>

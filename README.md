@@ -13,6 +13,15 @@ I first used Python to build a light version of this BOT and quickly switched ov
 
 <br/>
 
+*The main dashboard page where you can send messages to the class and an example of drawing on the class board :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/bot_connected.png" style="margin:5px" width="50%" />
+  <img src=".screenshots/loutre_drawing.png" style="margin:5px" width="50%" /> 
+</div>
+
+
+<br/>
+
 # Usage ?
 
 ## Requirements :
@@ -33,7 +42,7 @@ Then you need to bind **your sound output directly to your microphone input** su
 
 Here is the *workflow diagram* :
 
-![Workflow explanation](https://github.com/Minifixio/blackboard-collab-bot-js/blob/master/bot/models/sound_workflow.png)
+![Workflow explanation](.screenshots/sound_workflow.png)
 
 <br/><br/>
 To redirect the sound output to both your own user's audio output and mic input, you can use multi-output devices. 
@@ -69,19 +78,20 @@ When you start the BOT for the first time, you may have small bugs which will be
 
 * During the **audio setup** : if the BOT is stuck on the input audio device selection when connecting to the classroom, you can click on the "Skip audio setup" or "Everything is working well" button on the BOT control image in the dashboard.
 
-
 <br/>
 
-## Using a **virtual machine** :
-
-*Coming soon*
+*The BOT let you select the audio input that it will use :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/bot_connecting.png" style="margin:5px" width="50%" /> 
+    <img src=".screenshots/bot_mic_selection.png" style="margin:5px" width="50%" />
+</div>
 
 
 <br/>
 
 ## Using **Docker** :
  
-*Coming soon, having problems with PulseAudio config*
+*Having problems with PulseAudio config, any help is welcomed!*
  
 <br/><br/>
 
@@ -124,7 +134,29 @@ Adding **your own drawings** :
 If you want to edit the dashboard, you can play with the Angular project inside the ```/dashboard``` folder.  
 Then, make sure to run ```ng build --outputPath="../bot/dist"``` to replace the actual dashboard.
 
-<br/><br/>
+<br/>
 
 I'm really open to any suggestions / remarks / contributions :)
 
+<br/>
+
+# Screenshots :
+
+*The Soundboard page and Drawings panel :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/soundboard.png" style="margin:5px" width="50%" />
+  <img src=".screenshots/drawings.png" style="margin:5px" width="50%" /> 
+</div>
+
+*The commands selection & launch page :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/bot_setup_page.png" style="margin:5px" width="100%" />
+</div>
+
+*Some other examples of drawings :* 
+<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+  <img src=".screenshots/thug_drawing.png" style="margin:5px" width="50%" />
+  <img src=".screenshots/lol_face_drawing.png" style="margin:5px" width="50%" /> 
+</div>
+
+<br/>

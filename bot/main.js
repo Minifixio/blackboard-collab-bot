@@ -17,7 +17,7 @@ app.use(cors())
 app.use('/static', express.static('files'));
 app.use(express.static('dist'));
 
-app.all("/*", function(req, res){
+app.all("/dashboard/*", function(req, res){
     res.sendFile("index.html", { root: __dirname + "/dist"});
 });
 

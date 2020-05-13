@@ -29,7 +29,7 @@ export class MainComponent implements OnInit {
   screenshotUrl: string;
 
   botNameInput: string;
-  botUrlInput = 'http://collaborate.blackboard.com/go?CTID=d83e9915-9912-42a5-b54f-289b3e310135G'//: string;
+  botUrlInput: string;
 
   constructor(
     private httpService: HttpService,

@@ -138,18 +138,18 @@ I'm really open to any suggestions / remarks / contributions :)
 # Screenshots :
 
 *The Soundboard page and Drawings panel :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+<div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
   <img src=".screenshots/soundboard.png" style="margin:5px" width="50%" />
   <img src=".screenshots/drawings.png" style="margin:5px" width="50%" /> 
 </div>
 
 *The commands selection & launch page :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+<div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
   <img src=".screenshots/bot_setup_page.png" style="margin:5px" width="100%" />
 </div>
 
 *Some other examples of drawings :* 
-<div style="display: flex; flex-direction: row; align-items: center; text-align: center;">
+<div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
   <img src=".screenshots/thug_drawing.png" style="margin:5px" width="50%" />
   <img src=".screenshots/lol_face_drawing.png" style="margin:5px" width="50%" /> 
 </div>

@@ -82,8 +82,8 @@ Lors de la première utilisation du BOT, vous pouvez être confrontés à diffé
 <br/>
 
 *Le BOT vous demande de choisir l'entrée audio qu'il va utiliser :* 
-![The BOT connecting](.screenshots/bot_connected.png)
-![A mic selection](.screenshots/loutre_drawing.png)
+![The BOT connecting](.screenshots/bot_connecting.png)
+![A mic selection](.screenshots/bot_mic_selection.png)
 
 <br/>
 

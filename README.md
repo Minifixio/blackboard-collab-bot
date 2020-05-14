@@ -78,8 +78,8 @@ When you start the BOT for the first time, you may have small bugs which will be
 <br/>
 
 *The BOT let you select the audio input that it will use :* 
-![The BOT connecting](.screenshots/bot_connected.png)
-![A mic selection](.screenshots/loutre_drawing.png)
+![The BOT connecting](.screenshots/bot_connecting.png)
+![A mic selection](.screenshots/bot_mic_selection.png)
 
 
 <br/>
